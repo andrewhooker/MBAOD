@@ -1,4 +1,6 @@
 ## RUN MBAOD simulation with missspecified prior. 
+## using NONMEM and PopED in Matlab
+
 setwd("/Users/ahooker/Documents/_PROJECTS/AOD/repos/MBAOD/examples/")
 
 rm(list=ls())
