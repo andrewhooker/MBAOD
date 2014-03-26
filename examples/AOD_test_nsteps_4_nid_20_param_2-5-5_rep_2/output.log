@@ -1,0 +1,140 @@
+
+                            < M A T L A B (R) >
+                  Copyright 1984-2013 The MathWorks, Inc.
+                     R2013b (8.2.0.701) 64-bit (maci64)
+                              August 13, 2013
+
+ 
+To get started, type one of these: helpwin, helpdesk, or demo.
+For product information, visit www.mathworks.com.
+ 
+RS - It. : 5
+OFV. : 0.336234
+RS - It. : 10
+OFV. : 95005.3
+RS - It. : 15
+OFV. : 1.76363e+13
+RS - It. : 20
+OFV. : 2.33643e+14
+RS - It. : 25
+OFV. : 3.48751e+15
+Elapsed time for Serial Random search with 25 iterations: 1.71169 seconds
+RS - It. : 5
+OFV. : 3.48751e+15
+RS - It. : 10
+OFV. : 3.48751e+15
+RS - It. : 15
+OFV. : 3.48751e+15
+RS - It. : 20
+OFV. : 3.48751e+15
+RS - It. : 25
+OFV. : 3.48751e+15
+Elapsed time for Serial Random search with 25 iterations: 1.71864 seconds
+RS - It. : 5
+OFV. : 3.48751e+15
+RS - It. : 10
+OFV. : 3.48751e+15
+RS - It. : 15
+OFV. : 3.48751e+15
+RS - It. : 20
+OFV. : 3.48751e+15
+RS - It. : 25
+OFV. : 3.48751e+15
+Elapsed time for Serial Random search with 25 iterations: 1.699 seconds
+RS - It. : 5
+OFV. : 3.48751e+15
+RS - It. : 10
+OFV. : 3.48751e+15
+RS - It. : 15
+OFV. : 3.48751e+15
+RS - It. : 20
+OFV. : 3.48751e+15
+RS - It. : 25
+OFV. : 4.55946e+15
+Elapsed time for Serial Random search with 25 iterations: 1.70142 seconds
+RS - It. : 5
+OFV. : 4.55946e+15
+RS - It. : 10
+OFV. : 4.55946e+15
+RS - It. : 15
+OFV. : 4.55946e+15
+RS - It. : 20
+OFV. : 4.55946e+15
+RS - It. : 25
+OFV. : 4.55946e+15
+Elapsed time for Serial Random search with 25 iterations: 1.72221 seconds
+RS - It. : 5
+OFV. : 4.55946e+15
+RS - It. : 10
+OFV. : 4.55946e+15
+RS - It. : 15
+OFV. : 4.55946e+15
+RS - It. : 20
+OFV. : 4.55946e+15
+RS - It. : 25
+OFV. : 4.55946e+15
+Elapsed time for Serial Random search with 25 iterations: 1.71218 seconds
+RS - It. : 5
+OFV. : 4.55946e+15
+RS - It. : 10
+OFV. : 4.55946e+15
+RS - It. : 15
+OFV. : 4.55946e+15
+RS - It. : 20
+OFV. : 4.55946e+15
+RS - It. : 25
+OFV. : 4.55946e+15
+Elapsed time for Serial Random search with 25 iterations: 1.68709 seconds
+RS - It. : 5
+OFV. : 4.55946e+15
+RS - It. : 10
+OFV. : 4.55946e+15
+RS - It. : 15
+OFV. : 4.55946e+15
+RS - It. : 20
+OFV. : 4.55946e+15
+RS - It. : 25
+OFV. : 4.55946e+15
+Elapsed time for Serial Random search with 25 iterations: 1.72361 seconds
+RS - It. : 5
+OFV. : 4.55946e+15
+RS - It. : 10
+OFV. : 4.55946e+15
+RS - It. : 15
+OFV. : 4.55946e+15
+RS - It. : 20
+OFV. : 4.55946e+15
+RS - It. : 25
+OFV. : 4.55946e+15
+Elapsed time for Serial Random search with 25 iterations: 1.71892 seconds
+RS - It. : 5
+OFV. : 4.55946e+15
+RS - It. : 10
+OFV. : 4.55946e+15
+RS - It. : 15
+OFV. : 4.55946e+15
+RS - It. : 20
+OFV. : 4.55946e+15
+RS - It. : 25
+OFV. : 4.55946e+15
+Elapsed time for Serial Random search with 25 iterations: 1.73055 seconds
+Result of optimization in file: 1.m
+Optimal sampling times:
+
+ans =
+
+    0.0000    1.0000    2.0000    4.0000    6.0000    8.0000   24.0000
+    0.0000    0.0000    0.0000   12.2850   24.0000    8.3133   24.0000
+    0.0000    7.2591   11.1674   12.2461    5.6589   22.8933   17.7494
+   19.2654    8.8722    3.9871    7.6574   12.1372   24.0000   13.5427
+
+Optimal covariates:
+
+ans =
+
+   70.0000
+    1.2687
+   14.3593
+   41.6493
+
+ofvmf: 4.559460e+15

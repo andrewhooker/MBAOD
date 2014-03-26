@@ -1,0 +1,42 @@
+
+                            < M A T L A B (R) >
+                  Copyright 1984-2013 The MathWorks, Inc.
+                     R2013b (8.2.0.701) 64-bit (maci64)
+                              August 13, 2013
+
+ 
+To get started, type one of these: helpwin, helpdesk, or demo.
+For product information, visit www.mathworks.com.
+ 
+{Attempted to access bpop(6); index out of bounds because numel(bpop)=5.
+
+Error in sfg (line 8)
+pop_params=[ bpop(1)	%g(1)=estar
+
+Error in m1 (line 96)
+                g_plus=feval(globalStructure.fg_pointer,x,a,bpop_plus,b_ind,bocc_ind);
+                
+Error in mf (line 31)
+    [m1_tmp,globalStructure]
+    =m1(model_switch,xt_ind,x,a,bpop,b_ind,bocc_ind,d,globalStructure);
+
+Error in mftot0 (line 16)
+        [mf_tmp,globalStructure]=mf(model_switch(i,1:ni(i))',xt(i,1:ni(i))',
+        ...
+
+Error in mftot (line 5)
+        [ret,globalStructure] =
+        mftot0(model_switch,groupsize,ni,xt,x,a,bpop,d,sigma,docc,globalStructure);
+        
+Error in Doptim (line 30)
+    [fmf,globalStructure] =
+    mftot(model_switch,globalStructure.groupsize,ni,xt,x,a,bpop,d,globalStructure.sigma,docc_full,globalStructure);
+    
+Error in optimize (line 47)
+                [xt,x,a,fmf,dmf,globalStructure]=Doptim(globalStructure,ni, xt,
+                model_switch, x, a, bpop, d, maxxt, minxt,maxa,mina,fmf,dmf);
+
+Error in poped (line 104)
+[fmf,dmf,globalStructure]=optimize(globalStructure);
+} 
+
