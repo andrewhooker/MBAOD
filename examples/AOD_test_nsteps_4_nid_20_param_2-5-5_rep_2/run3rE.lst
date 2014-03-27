@@ -1,4 +1,4 @@
-Wed Mar 26 16:31:54 CET 2014
+Thu Mar 27 10:29:36 CET 2014
 $PROBLEM    PK model
 $INPUT      ID TIME DV AMT WT
 $DATA       outA.tab IGNORE=@
@@ -45,8 +45,8 @@ NM-TRAN MESSAGES
 
 License Registered to: Uppsala University
 Expiration Date:    14 APR 2014
-Current Date:       26 MAR 2014
-  **** WARNING!!! Days until program expires :  18 ****
+Current Date:       27 MAR 2014
+  **** WARNING!!! Days until program expires :  17 ****
   **** CONTACT idssoftware@iconplc.com FOR RENEWAL ****
 1NONLINEAR MIXED EFFECTS MODEL PROGRAM (NONMEM) VERSION 7.3.0
  ORIGINALLY DEVELOPED BY STUART BEAL, LEWIS SHEINER, AND ALISON BOECKMANN
@@ -221,7 +221,7 @@ Current Date:       26 MAR 2014
  EPSshrink(%):   1.2603E+01  1.2603E+01
 
  #TERE:
- Elapsed estimation time in seconds:     0.52
+ Elapsed estimation time in seconds:     0.50
  Elapsed covariance time in seconds:     0.50
 1
  
@@ -502,9 +502,9 @@ Current Date:       26 MAR 2014
  SG22
 +       -1.40E+03 -1.45E+02 -1.07E+04 .........  8.32E+03  8.58E+04 .........  3.79E+05
  
- #CPUT: Total CPU Time in Seconds,        1.039
+ #CPUT: Total CPU Time in Seconds,        1.016
 Stop Time:
-Wed Mar 26 16:31:56 CET 2014
+Thu Mar 27 10:29:37 CET 2014
 This file was created using /opt/nm_7.3.0_g/run/nmfe73
-Started  Wed Mar 26 16:31:54 2014
-Finished Wed Mar 26 16:31:56 2014
+Started  Thu Mar 27 10:29:36 2014
+Finished Thu Mar 27 10:29:37 2014

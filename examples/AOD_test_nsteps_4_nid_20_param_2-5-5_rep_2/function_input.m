@@ -6,12 +6,12 @@ popedInput.prior_fim=[zeros(0,1)];  %Use Prior FIM
 popedInput.optsw=[0 1 0 1 0];  %Smpl/subject, Smpl sched, Discrete, Covariates, Num ind/grp
 
 %----- Parameter estimates ----
-popedInput.design.bpop=[0  1.07 0; 0 19.2 0; 0  1.93 0; 0 39.8 0; 0 17.6 0];  %Typical estimates
-popedInput.design.d=[0  0.0636 0; 0 0.0639 0];  %BSV estimates
+popedInput.design.bpop=[0  1.08 0; 0 19.2 0; 0  1.92 0; 0 39.4 0; 0 18.9 0];  %Typical estimates
+popedInput.design.d=[0  0.0625 0; 0 0.0636 0];  %BSV estimates
 popedInput.design.covd=[0];  %Covar estimates BSV
 popedInput.design.docc=[zeros(3,0)]';  %BOV estimates
 popedInput.design.covdocc=[zeros(0,1)]';  %Covar estimates BOV
-popedInput.design.sigma=[0.0162 0 ; 0 0.00113];  %RUV estimates Variance-covariance
+popedInput.design.sigma=[0.0163 0 ; 0 0.00112];  %RUV estimates Variance-covariance
 
 %----- Un intesting parameters -----
 popedInput.d_switch=[1];  %Use D (1) or ED (2) optimal design
@@ -32,9 +32,9 @@ popedInput.nb=[2];  %Number of BSV parameters
 
 % ---- Covariates ----- 
 popedInput.na=[1];  %Number of different covariates
-popedInput.design.a=[70 1.26873 14.3593 1]';  %Initial covariate value per group
-popedInput.design.maxa=[70 1.26873 14.3593 70]';  %Maximum covariate value per group
-popedInput.design.mina=[70 1.26873 14.3593 1]';  %Minimum covariate value per group
+popedInput.design.a=[70 1 14.6693 1]';  %Initial covariate value per group
+popedInput.design.maxa=[70 1 14.6693 70]';  %Maximum covariate value per group
+popedInput.design.mina=[70 1 14.6693 1]';  %Minimum covariate value per group
 popedInput.bUseGrouped_a=[0];  %Use grouped covariate values (no=0)
 popedInput.design.Ga=[1 2 3 4]';  %Grouping of covariate values
 popedInput.line_opta=[1 1 1 1];  %Line search for each of the covariates
@@ -51,9 +51,9 @@ popedInput.maxni=[7];  %Maximum number of samples per group
 popedInput.minni=[7];  %Minimum number of samples per group
 popedInput.design.ni=[7 ; 7 ; 7 ; 7];  %Initial number of samples per group
 popedInput.design.model_switch=[1 1 1 1 1 1 1 ; 1 1 1 1 1 1 1 ; 1 1 1 1 1 1 1 ; 1 1 1 1 1 1 1];  %Model switch for samples per group
-popedInput.design.xt=[0 1 2 4 6 8 24 ; 0 0 0 12.285 24 8.31332 24 ; 0 7.25915 11.1674 12.2461 5.65895 22.8933 17.7494 ; 0.5 1 2 3 6 12 24];  %Initial sampling times per group
-popedInput.design.maxxt=[0 1 2 4 6 8 24 ; 0 0 0 12.285 24 8.31332 24 ; 0 7.25915 11.1674 12.2461 5.65895 22.8933 17.7494 ; 24 24 24 24 24 24 24];  %Maximum sampling times per group
-popedInput.design.minxt=[0 1 2 4 6 8 24 ; 0 0 0 12.285 24 8.31332 24 ; 0 7.25915 11.1674 12.2461 5.65895 22.8933 17.7494 ; 0 0 0 0 0 0 0];  %Minimum sampling times per group
+popedInput.design.xt=[0 1 2 4 6 8 24 ; 0 10.2268 0 8.56759 0 24 24 ; 24 18.0985 9.96962 11.2405 5.90958 0 11.4042 ; 0.5 1 2 3 6 12 24];  %Initial sampling times per group
+popedInput.design.maxxt=[0 1 2 4 6 8 24 ; 0 10.2268 0 8.56759 0 24 24 ; 24 18.0985 9.96962 11.2405 5.90958 0 11.4042 ; 24 24 24 24 24 24 24];  %Maximum sampling times per group
+popedInput.design.minxt=[0 1 2 4 6 8 24 ; 0 10.2268 0 8.56759 0 24 24 ; 24 18.0985 9.96962 11.2405 5.90958 0 11.4042 ; 0 0 0 0 0 0 0];  %Minimum sampling times per group
 popedInput.bUseGrouped_xt=[0];  %Use grouped sampling times
 popedInput.design.G=[1 2 3 4 5 6 7 ; 8 9 10 11 12 13 14 ; 15 16 17 18 19 20 21 ; 22 23 24 25 26 27 28];  %Grouping of sampling times
 popedInput.design.x=[zeros(0,4)]';  %Matrix initial discrete covariates

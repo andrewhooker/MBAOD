@@ -76,6 +76,8 @@ runRepAna(name=name,
 library(grid)
 library(ggplot2)
 library(reshape2)
+library(Hmisc)
+
 
 #################################
 ######## PARAMETER ESTIMATES 
@@ -152,7 +154,8 @@ params.2 <- with(pars.2,c(thCl,thMax,thE50,thHill))
 params.3 <- with(pars.3,c(thCl,thMax,thE50,thHill))
 params.4 <- with(pars.4,c(thCl,thMax,thE50,thHill))
 
-emax.curve$tureEMAX <- unlist(lapply(1:70,"em.curve",params=c(1,2,25,5)))
+emax.curve <- data.frame(wt=1:70)
+emax.curve$trueEMAX <- unlist(lapply(1:70,"em.curve",params=c(1,2,25,5)))
 emax.curve$em.co.1 <- unlist(lapply(1:70,"em.curve",params=c(1,2,5,5)))
 emax.curve$em.co.2 <- unlist(lapply(1:70,"em.curve",params=params.2))
 emax.curve$em.co.3 <- unlist(lapply(1:70,"em.curve",params=params.3))
