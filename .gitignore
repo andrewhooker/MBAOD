@@ -2,3 +2,5 @@
 .Rhistory
 .RData
 /examples/test_mbaod_2/
+
+examples/resultI_test_mbaod_2.Rdata
