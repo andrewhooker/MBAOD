@@ -13,6 +13,15 @@ readEstPar <- function(reserr="comb",     # 1 or 2 sigmas
   if(file.exists(out.lst["reduced"])) { f <- file(out.lst["reduced"]); d <- readLines(f); close(f) }
   if(file.exists(out.lst["full"])) { f <- file(out.lst["full"]); d <- readLines(f); close(f) }
   
+  if(file.exists(out.lst["reduced"])) file.lst <- out.lst["reduced"]
+  if(file.exists(out.lst["full"])) file.lst <- out.lst["full"]
+  
+  command <- paste("sumo ",file.lst,sep="")
+  if(Sys.which("sumo")==""){  
+    command <- paste("source ~/.bashrc;",command,sep="")
+  }
+  system(command) 
+  
   # Find lines 
   lineTh  <- grep("THETA - VECTOR OF FIXED EFFECTS PARAMETERS",d)[1]+5
   lineOm1 <- grep("OMEGA - COV MATRIX FOR RANDOM EFFECTS - ETAS",d)[1]+6

@@ -62,7 +62,6 @@ runSSE <- function(prev, step=1, simple=FALSE, remote=TRUE,
   
   if(Sys.which("execute")=="") command <- paste("source ~/.bashrc;",command,sep="")
   system(command)
-  
   # cleanup folders
   if(removefolder){
     files <- dir(pattern="mod\\.dir")

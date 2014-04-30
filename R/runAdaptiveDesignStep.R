@@ -8,7 +8,8 @@ runAdaptiveDesignStep <- function(nsteps,
                                   settings, # detFIM or Ds
                                   mpar,fixed,
                                   # initial mat. parameters
-                                  name ){
+                                  name,
+                                  OD_tool="poped_R"){
   
   # Cleanup   
   cleanup()
@@ -30,30 +31,11 @@ runAdaptiveDesignStep <- function(nsteps,
     print('----------------------')
     print('')
     if(i!=1){
-      ## Create function_input file  
-      createFunctionInput(prev     = prev,                # previous run info
-                          cur.cov  = cur.cov,             # current init/min/max cov values
-                          cur.groupsize = cur.groupsize, # current init/min/max group size
-                          unfix    = unfix,                 # fixed / Ds parameters
-                          samples  = samples,             # current times + number
-                          settings = settings,           # optimization settings
-                          simple   = ifelse(i==2, TRUE, FALSE),   # 2st step use prespecified pars
-                          mpar     = mpar,  # prespecified parameters
-                          out.lst=out.lst,
-                          est.mods=est.mods)                 
       
-      ## Run PopED
-      runPoped(remote = settings$runRemote, name=name, sh.script=settings$poped.sh.script, cluster=settings$poped.cluster)
-      
-      ## get poped output file
-      file.name <- getPopedOutputFile()
-      
-      ## Extract OFV
-      ofv <- getPopedOfv()
-      
-      ## Extract Optimal covariate values
-      optcov <- getOptimalCov(file.name)
-      
+      ret <- optimize_next_cohort(prev, cur.cov, cur.groupsize, unfix, 
+                           samples, settings, i, mpar, out.lst, est.mods, name,tool=OD_tool)
+      ofv <- ret$ofv
+      optvars <- ret$optvars
       ## Save current run results to previous
       current <- list(nsteps        = nsteps,
                       ngroups       = length(cur.groupsize$init), 
@@ -69,8 +51,8 @@ runAdaptiveDesignStep <- function(nsteps,
                       mpar          = mpar,
                       name          = name,
                       dataset       = read.table("outA.tab"),
-                      cov           = optcov$optCov,
-                      samplingtimes = optcov$optTimes,
+                      cov           = optvars$optCov,
+                      samplingtimes = optvars$optTimes,
                       ofv           = ofv,
                       params        = params)
       
@@ -114,7 +96,7 @@ runAdaptiveDesignStep <- function(nsteps,
     #   prev[[i]]$params <- xpose4::read.lst(output_filename)    
     #   
     
-    cleanup()
+    cleanup(sse.remove.folder=settings$sse.remove.folder)
     
   }
   return(prev) 

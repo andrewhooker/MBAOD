@@ -1,4 +1,4 @@
-cleanup <- function(){
+cleanup <- function(sse.remove.folder=TRUE){
   
   print('- Cleaning up..')
   
@@ -17,8 +17,9 @@ cleanup <- function(){
   }
   
   # remove PsN folders
-  if( length(dir(pattern="modelfit"))>0){
-    system('rm -r modelfit*')
-  }
-  
+  if(sse.remove.folder){
+    if( length(dir(pattern="modelfit"))>0){
+      system('rm -r modelfit*')
+    }
+  }  
 }

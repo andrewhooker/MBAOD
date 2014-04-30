@@ -1,6 +1,6 @@
 
 
-runPoped <- function(remote=remote, name=name, sh.script="run.sh",cluster=T){  
+runPoped_matlab <- function(remote=remote, name=name, sh.script="run.sh",cluster=T){  
   print('- Running POPED')
   
   # remove old output.log

@@ -13,6 +13,7 @@ runRepAna <- function(name,
                       fixed,
                       description,
                       overwrite=FALSE,
+                      OD_tool="poped_R",
                       ...)
 {
   # check if file exists
@@ -55,7 +56,8 @@ runRepAna <- function(name,
                                settings, # detFIM or Ds
                                mpar,
                                fixed,# initial mat. parameters
-                               name=name)
+                               name=name,
+                               OD_tool=OD_tool)
     res$description<-description
     resall[[i]]<-res
     

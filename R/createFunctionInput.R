@@ -8,8 +8,7 @@ createFunctionInput <- function(prev,      # previous run info
                                 simple,
                                 mpar,
                                 out.lst,
-                                est.mods
-){
+                                est.mods){
   
   wline <- function(var, val, transpose=FALSE, comment=""){
     # Function to write a line in the function_input
@@ -48,8 +47,8 @@ createFunctionInput <- function(prev,      # previous run info
   ### Parameter estimates
   estPar<- readEstPar(reserr="comb", mpar=mpar, simple=simple,out.lst=out.lst) # Extract parameter estimates from LST
   #  print(mpar)
-    print(simple)
-    print(estPar)
+  print(simple)
+  print(estPar)
   f[7]  <- ""
   f[8]  <- "%----- Parameter estimates ----"
   f[9]  <- wline("popedInput.design.bpop"      , estPar$estTh  , FALSE , "Typical estimates")  
