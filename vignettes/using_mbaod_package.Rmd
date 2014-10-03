@@ -1,0 +1,85 @@
+---
+title: "Using the MBAOD package"
+author: "Andrew C. Hooker"
+date: '`r Sys.Date()`'
+output:
+  html_document:
+    fig_caption: yes
+    theme: spacelab
+  pdf_document:
+    fig_caption: yes
+    number_sections: yes
+---
+
+# Introduction
+The MBAOD (Model Based Adaptive Optimal Design) package can be used to simulate clinical trials using predefined adaptive and optimization rules.  In addition the package can be used to optimize any specific cohort of an actual study using MBAOD.
+
+Adaptive designs (AD), in general, are a way to adapt experiments as your understanding of the system you are studying improves through intermediate analyses of the experimental data.  Adaptive **optimal** design (AOD) uses optimal design theory as a way to design the next stage of your study.  In this package we are assuming the use of **population** models for both the estimation of parameters (analysis of data) as well as for the optimization of the various cohorts of our experiment (see figure \ref{general_schema}). 
+
+![General schematic of a model based adative optimal design. \label{general_schema} ](figures/2013_06_15_PODE_AOD_Hooker/Slide13.png)
+
+This package currently uses PopED, NONMEM, PsN and R to handle the various tasks inherent to simulating and evaluating an MBAOD experiment (see figure \ref{specific_schema}).  The code has been written to be (hopefully) quite modular, so that other tools can easily be switched in place of the current tool set (e.g. PFIM instead of PopED). 
+
+![Specific schematic of MBAOD implemented in the MBAOD package.  The entire process can be repeated multiple times and then the results of those repeated simulations can be summarized using R. \label{specific_schema} ](figures/2013_06_15_PODE_AOD_Hooker/Slide18.png)
+
+This document describes how to install and use the MBAOD (Model Based Adaptive Optimal Design) package.  
+
+
+# Installation
+* You need to have R installed.  Download the latest version of R from http://www.r-project.org.
+
+* Install PopED for R (https://github.com/andrewhooker/PopED). To install the latest stable release from CRAN, write at the R command line: 
+    
+    ```{r, eval=FALSE}
+    install.packages("PopED")
+    ```
+    
+* NONMEM and PsN (http://psn.sf.net) should be installed.  Cluster installations accessible via ssh should be ok. 
+
+* Download the MBAOD package from https://github.com/andrewhooker/MBAOD.  On the right hand side of the page there are links to "Clone in Desktop" and "Download ZIP".
+
+# An example
+
+In this example we will simulate multiple realizations of a hypothetical clinical trial to bridge the pharmacokientics (PK) of and adult population into a children.  
+
+**The Model**   
+We assume that the drug PK in adults can be described by a one-compartment model  additive and proportional residual error. For each individual $i$ we have: 
+
+$$y_i=\frac{DOSE_i}{V_i} \cdot e^{-\frac{{CL}_i}{V_i} t_i} \cdot (1+\varepsilon_{prop,i}) + \varepsilon_{add,i}$$
+
+We assume a log-normal distribution of parameter values within individuals of the study population.  For $P \in (C{L},V)$ we have:
+
+$$ P_i = P_{pop} \cdot e^{\eta_{P,i}}, \; \; \eta_{P,i} \in N(0,\omega_{P})$$
+
+There are several methods that can be used to describe the link between PK in adults and 
+children. For this example I use a relatively simplistic approach assuming an emax maturation function for CL dependent on weight (WT) as well as a weight adjusted volume parameter:
+
+$$ 
+  \begin{aligned}
+  {CL}_i & = {CL}_{BASE,i} + \frac{{CL}_{MAX} \cdot {WT}_i^\gamma }{{WT50}^\gamma + {WT}_i^\gamma } \\    
+  V_i & = V_{STD,i} \cdot  \frac{{WT}_i}{70}
+  \end{aligned}
+$$
+
+Where $V_{STD,i}$ and ${CL}_{BASE,i}$ are assumed log-normally distributed as above.
+
+**The Design**   
+In this study we simulate the initial cohort of adult patients using a fixed design and the adult PK model (no maturation).  The parameter estimates from that initial cohort of adult patients is  are then used to optimize   
+The first example we will look at is labelled "Example_1_poped_r" in the "examples" folder of the MBAOD package. In this directory there are three things of interest:
+
+1. "Example_1.R" - an R script to run all the code presented here.
+2. "NONMEM_files" - the NONMEM model and data files needed to run this example.
+3. "PopED_files" - The PopED model needed to run this example.
+
+
+(@)  My first example will be numbered (1).
+(@)  My second example will be numbered (2).
+
+Explanation of examples.
+
+(@)  My third example will be numbered (3).
+Numbered examples can be labeled and referred to elsewhere in the document:
+
+(@good)  This is a good example.
+
+As (@good) illustrates, ...
