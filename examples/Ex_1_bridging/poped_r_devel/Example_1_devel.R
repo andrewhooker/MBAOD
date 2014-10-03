@@ -14,8 +14,8 @@ rm(list=ls())
 library(PopED)
 
 # load the MBAOD package
-source("../../tools/sourceDir.R")
-sourceDir("../../R",trace=F)
+source(file.path("..","..","..","tools","sourceDir.R"))
+sourceDir(file.path("..","..","..","R"),trace=F)
 
 # source the files used for the example
 source("mbaod_simulate.R")

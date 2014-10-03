@@ -24,7 +24,7 @@ source("PopED_files/poped.mod.PK.1.comp.maturation.R")
 
 
 runRepAna(name="Example_1_Results", 
-          rep=2, #number of times to repeat the MBAOD simulation 
+          rep=100, #number of times to repeat the MBAOD simulation 
           nsteps=4, # number of steps or cohorts in one AOD
           prev=list(list(ngroups       = 1, 
                          dose          = list(1000),     # necessery for makeDataSim

@@ -1,19 +1,14 @@
 ## RUN MBAOD simulation with missspecified prior. 
 ## using NONMEM and PopED in Matlab
 
-setwd("/Users/ahooker/Documents/_PROJECTS/AOD/repos/MBAOD/examples/")
+setwd("~/Documents/_PROJECTS/AOD/repos/MBAOD/examples/Ex_1_bridging/poped_matlab")
 
+# remove things from the global environment
 rm(list=ls())
 
-sourceDir <- function(path, trace = TRUE, ...) {
-  for (nm in list.files(path, pattern = "\\.[RrSsQq]$")) {
-    if(trace) cat(nm,":")
-    source(file.path(path, nm), ...)
-    if(trace) cat("\n")
-  }
-}
-
-sourceDir("/Users/ahooker/Documents/_PROJECTS/AOD/repos/MBAOD/R",trace=FALSE)
+# load the MBAOD package
+source(file.path("..","..","..","tools","sourceDir.R"))
+sourceDir(file.path("..","..","..","R"),trace=F)
 
 description="AOD_test"  # name of study
 nsteps=4 # number of steps in one AOD
@@ -39,14 +34,14 @@ runRepAna(name=name,
                          cov           = 70,
                          samplingtimes = list(c(0,1,2,4,6,8,24)),
                          ofv           = NA)),
-          models = list(modfullest="../NONMEM/models/run2fE.mod", 
-                        modfullsim="../NONMEM/models/run2fS.mod", 
-                        modredest="../NONMEM/models/run3rE.mod", 
-                        modredsim="../NONMEM/models/run2rS.mod"),
-          design.files = c("../MATLAB/feps.m",
-                           "../MATLAB/ff.m",
-                           "../MATLAB/function_input_reduced.m",
-                           "../MATLAB/sfg.m"),
+          models = list(modfullest="./NONMEM_files/run2fE.mod", 
+                        modfullsim="./NONMEM_files/run2fS.mod", 
+                        modredest="./NONMEM_files/run3rE.mod", 
+                        modredsim="./NONMEM_files/run2rS.mod"),
+          design.files = c("./PopED_files/feps.m",
+                           "./PopED_files/ff.m",
+                           "./PopED_files/function_input_reduced.m",
+                           "./PopED_files/sfg.m"),
           cur.cov=list(init=c(1), 
                        min=c(1),  
                        max=c(70)
@@ -58,7 +53,7 @@ runRepAna(name=name,
                         optimizedSamplingtimes=TRUE, optimizedCovariates=TRUE,
                         ODtype="D", ODcalctype="detFIM", # xD or xDs
                         runRemote=FALSE,
-                        poped.sh.script="../scripts/run_andy.sh",
+                        poped.sh.script="./scripts/run_andy.sh",
                         poped.cluster=FALSE,
                         sse.remove.folder=TRUE, 
                         sse.clean=3,
@@ -66,7 +61,8 @@ runRepAna(name=name,
           mpar=param_guess, 
           fixed=FALSE,
           description=description,
-          overwrite=T
+          overwrite=T,
+          OD_tool="poped_matlab"
 )
 
 
