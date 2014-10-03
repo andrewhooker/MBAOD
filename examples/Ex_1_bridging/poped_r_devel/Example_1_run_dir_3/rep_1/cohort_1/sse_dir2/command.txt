@@ -1,0 +1,1 @@
+/opt/PsN/bin/sse sim.mod -samples=2 -alternative_models=est.mod
