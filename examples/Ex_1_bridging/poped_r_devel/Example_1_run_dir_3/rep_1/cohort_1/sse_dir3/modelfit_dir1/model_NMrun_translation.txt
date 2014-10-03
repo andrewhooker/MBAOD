@@ -1,4 +1,0 @@
-mc-orig-1.mod                           NM_run1
-mc-orig-2.mod                           NM_run2
-mc-alt_1-1.mod                          NM_run3
-mc-alt_1-2.mod                          NM_run4

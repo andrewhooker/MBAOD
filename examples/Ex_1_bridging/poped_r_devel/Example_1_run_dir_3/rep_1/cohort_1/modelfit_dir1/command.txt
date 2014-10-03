@@ -1,1 +1,0 @@
-/opt/PsN/bin/execute sim.mod
