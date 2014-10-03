@@ -3,7 +3,7 @@ runRepAna <- function(name,
                       nsteps,
                       prev,
                       models,
-                      design.files,
+                      design.files=NULL,
                       cur.cov,
                       unfix,
                       cur.groupsize,
@@ -14,8 +14,7 @@ runRepAna <- function(name,
                       description,
                       overwrite=FALSE,
                       OD_tool="poped_R",
-                      ...)
-{
+                      ...){
   # check if file exists
   if(file.exists(name)){
     if(overwrite){
@@ -29,7 +28,7 @@ runRepAna <- function(name,
   ## copy needed files to directory
   dir.create(name)
   file.copy(c(unlist(models)), name, overwrite=TRUE) # copy model files
-  file.copy(c(unlist(design.files)), name, overwrite=TRUE) # copy design files
+  if(!is.null(design.files)) file.copy(c(unlist(design.files)), name, overwrite=TRUE) # copy design files
   file.copy(c(unlist(settings$poped.sh.script)), name, overwrite=TRUE) # copy shell scripts
   
   setwd(paste("./",name,sep=""))  
@@ -37,7 +36,7 @@ runRepAna <- function(name,
   models_names <- lapply(models,basename)
   design_file_names <- lapply(design.files,basename) 
   settings$poped.sh.script <- basename(settings$poped.sh.script)
-
+  
   resall<-list()
   for(i in 1:rep){
     print('')
