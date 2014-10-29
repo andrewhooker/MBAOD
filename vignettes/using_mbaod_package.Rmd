@@ -3,12 +3,13 @@ title: "Using the MBAOD package"
 author: "Andrew C. Hooker"
 date: '`r Sys.Date()`'
 output:
+  pdf_document:
+    fig_caption: yes
+    keep_tex: yes
+    number_sections: yes
   html_document:
     fig_caption: yes
     theme: spacelab
-  pdf_document:
-    fig_caption: yes
-    number_sections: yes
 ---
 
 # Introduction
