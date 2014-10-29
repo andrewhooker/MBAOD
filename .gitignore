@@ -1,4 +1,10 @@
 .Rproj.user
 .Rhistory
 .RData
+*.Rdata
+/inst/examples/*run_dir*
 /inst/examples/Ex_1_bridging/old
+/inst/examples/Ex_1_bridging/poped_r_devel/Example_1_Results
+/inst/examples/Ex_1_bridging/poped_r/Example_1_Results
+
+
