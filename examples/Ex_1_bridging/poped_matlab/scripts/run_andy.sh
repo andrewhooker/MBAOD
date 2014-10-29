@@ -1,1 +1,0 @@
-matlab -nosplash -nodisplay -nodesktop -r "result=poped(function_input());fprintf('ofvmf: %s\n',result.ofvmf);exit" -logfile output.log
