@@ -1,0 +1,135 @@
+PopED Results 
+
+        2014-10-24 13:55:43
+
+==============================================================================
+Model description : PopED model 
+
+Model Sizes : 
+Number of individual model parameters                  g[j]    : Ng    = 6
+Number of population model fixed parameters            bpop[j] : Nbpop = 5
+Number of population model random effects parameters   b[j]    : Nb    = 2
+
+Typical Population Parameters:
+bpop[1]:   1.8 
+bpop[2]:    20 
+bpop[3]:     2 
+bpop[4]:    25 
+bpop[5]:     5 
+
+Between Subject Variability matrix D (variance units) 
+0.05 0.00
+0.00 0.05
+
+Diagonal Elements of D [sqrt(param)]:
+D[1,1]:  0.05 [0.2236] 
+D[2,2]:  0.05 [0.2236] 
+
+Residual Unexplained Variability matrix SIGMA (variance units) : 
+0.0150 0.0000
+0.0000 0.0015
+
+Diagonal Elements of SIGMA [sqrt(param)]:
+SIGMA[1,1]: 0.015 [0.1225] 
+SIGMA[2,2]: 0.0015 [0.03873] 
+
+==============================================================================
+Experiment description (design and design space)
+
+Numer of individuals: 110
+Number of groups (individuals with same design): 4
+Numer of individuals per group:
+     Group 1: 50
+     Group 2: 20
+     Group 3: 20
+     Group 4: 20
+Numer of samples per group:
+     Group 1: 6
+     Group 2: 6
+     Group 3: 6
+     Group 4: 6
+Number of discrete experimental variables: 0
+Number of model covariates: 1
+
+Initial Sampling Schedule
+Group 1 :      1      2      4      6      8     24
+Group 2 :      1      2      4      6      8     24
+Group 3 :      1      2      4      6      8     24
+Group 4 :      1      2      4      6      8     24
+
+Covariates  (min, max):
+Group 1: 70 (1, 70)
+Group 2: 60 (1, 70)
+Group 3: 50 (1, 70)
+Group 4: 10 (1, 70)
+
+===============================================================================
+Initial design evaluation
+
+OFV = 4.40113e+20
+
+Efficiency criterion [usually defined as OFV^(1/npar)]  = 196.666
+
+Initial design expected parameter variance 
+and relative standard error (%RSE)
+    Parameter    Values   Variance       RSE
+      bpop[1]    1.8000   4.61e+00    119.32
+      bpop[2]   20.0000   2.06e-01      2.27
+      bpop[3]    2.0000   6.25e+00    125.03
+      bpop[4]   25.0000   4.65e+04    862.24
+      bpop[5]    5.0000   4.67e+03   1366.14
+       D[1,1]    0.0500   6.66e-05     16.32
+       D[2,2]    0.0500   5.69e-05     15.08
+   SIGMA[1,1]    0.0150   1.16e-06      7.19
+   SIGMA[2,2]    0.0015   1.68e-07     27.36
+
+==============================================================================
+Criterion Specification
+
+OFV calculation for FIM: 1 
+  1=Determinant of FIM,
+  4=log determinant of FIM,
+  6=determinant of interesting part of FIM (Ds)
+
+Approximation method: 0
+  0=FO, 
+  1=FOCE, 
+  2=FOCEI, 
+  3=FOI
+
+Fisher Information Matrix type: 1
+  0=Full FIM,
+  1=Reduced FIM,
+  2=weighted models,
+  3=Loc models,
+  4=reduced FIM with derivative of SD of sigma as pfim,
+  5=FULL FIM parameterized with A,B,C matrices & derivative of variance,
+  6=Calculate one model switch at a time, good for large matrices,
+  7=Reduced FIM parameterized with A,B,C matrices & derivative of variance
+
+Design family: 1
+  D-family design (1) or 
+  ED-familty design (0) 
+  (with or without parameter uncertainty)
+
+==============================================================================
+Optimization of design parameters
+
+* Optimize Covariates
+
+
+MFEA - It. : 1
+Exchanged covariate 1 in group/ind 2 from 60 to 22
+Delta : 67554.8   OFV. : 2.97322e+25
+MFEA - It. : 2
+Exchanged covariate 1 in group/ind 3 from 50 to 31
+Delta : 13.9248   OFV. : 4.43748e+26
+MFEA - It. : 3
+Exchanged covariate 1 in group/ind 4 from 10 to 5
+Delta : 0.46056   OFV. : 6.48121e+26
+MFEA - It. : 4
+Exchanged covariate 1 in group/ind 2 from 22 to 20
+Delta : 0.140501   OFV. : 7.39182e+26
+MFEA - It. : 5
+Exchanged covariate 1 in group/ind 3 from 31 to 30
+Delta : 0.0116659   OFV. : 7.47805e+26
