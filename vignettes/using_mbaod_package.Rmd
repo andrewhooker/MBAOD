@@ -1,16 +1,17 @@
 ---
 title: "Using the MBAOD package"
-author: "Andrew C. Hooker"
+author: Andrew C. Hooker
 date: '`r Sys.Date()`'
 output:
+  html_document:
+    fig_caption: yes
+    number_sections: yes
   pdf_document:
     fig_caption: yes
     keep_tex: yes
     number_sections: yes
-  html_document:
-    fig_caption: yes
-    theme: spacelab
 ---
+
 
 # Introduction
 The MBAOD (Model Based Adaptive Optimal Design) package can be used to simulate clinical trials using predefined adaptive and optimization rules.  In addition the package can be used to optimize any specific cohort of an actual study using MBAOD.
@@ -27,33 +28,63 @@ This document describes how to install and use the MBAOD (Model Based Adaptive O
 
 
 # Installation
-* You need to have R installed.  Download the latest version of R from http://www.r-project.org.
 
-* Install PopED for R (https://github.com/andrewhooker/PopED). To install the latest stable release from CRAN, write at the R command line: 
+1. You need to have R installed.  Download the latest version of R from http://www.r-project.org.
+
+2. Install PopED for R (https://github.com/andrewhooker/PopED). To install the latest stable release from CRAN, write at the R command line: 
     
     ```{r, eval=FALSE}
     install.packages("PopED")
     ```
     
-* NONMEM and PsN (http://psn.sf.net) should be installed.  Cluster installations accessible via ssh should be ok. 
+3. NONMEM and PsN (http://psn.sf.net) should be installed. 
 
-* Download the MBAOD package from https://github.com/andrewhooker/MBAOD.  On the right hand side of the page there are links to "Clone in Desktop" and "Download ZIP".
+4. Download the MBAOD package from https://github.com/andrewhooker/MBAOD.  On the right hand side of the page there are links to "Clone in Desktop" and "Download ZIP". Alternatively, if you want to use the latest version of MBAOD but aren't interested in developing the code, you can use the `devtools::install_github()` from the R command line. The `install_github()` 
+approach requires that you build a package from source, i.e. `make` and compilers must be installed on your 
+system -- see the R FAQ for your operating system ; you may also need to install dependencies manually:
 
-# An example
+    ```{r, eval=FALSE}
+    devtools::install_github("MBAOD",username="andrewhooker")
+    ```
 
-In this example we will simulate multiple realizations of a hypothetical clinical trial to bridge the pharmacokientics (PK) of and adult population into a children.  
+# Overview of the MBAOD package
 
-**The Model**   
+The MBAOD package's main tool is the `mbaod_simulate()` function, which simulates model based adaptive design scenarios. 
+The function's main argument `cohorts` accepts a list of cohorts to run. Each cohort, in turn, is a list of, potentially, 4 named lists: "design", "optimize", "simulate" and "estimate". Each list can be `NULL` or a list of elements:
+    
+* "design" is a list that defines the (initial) design for that cohort. 
+* "optimize" is a list that defines what to do for the optimization segment for that cohort.
+* "simulate" is a list that defines what to do for the simulation segment for that cohort.
+* "estimate" is a list that defines what to do for the estimation segment for that cohort.
+
+There are a number of optional arguments (see `args(mbaod_simulate)`) including:
+
+* `ncohorts` specifies the number of cohorts in the adaptive design procedure. If larger than the length of `cohorts` then 
+the cohort information is inhereted from the last cohort in the list.
+* `rep` specifies the number of times the adaptive design procedure should be repeated.
+
+The MBAOD package also has a few plotting functions to visualize the output from `mbaod_simulate()`, including `mbaod_vpc()` and `plot_parameter_estimates()`.  In order to show how these tools work we present below some working examples.
+
+# An example: Adaptive design of a PK bridging study from adults to children
+
+In this example we will simulate multiple realizations of a hypothetical clinical trial to bridge the pharmacokinetics (PK) of an adult population into a children.   
+
+## The adult model   
 We assume that the drug PK in adults can be described by a one-compartment model  additive and proportional residual error. For each individual $i$ we have: 
 
-$$y_i=\frac{DOSE_i}{V_i} \cdot e^{-\frac{{CL}_i}{V_i} t_i} \cdot (1+\varepsilon_{prop,i}) + \varepsilon_{add,i}$$
+$$
+\begin{aligned}
+y_i=\frac{DOSE_i}{V_i} \cdot e^{-({CL}_i/V_i) \cdot t_i} \cdot (1+\varepsilon_{prop,i}) + \varepsilon_{add,i}
+\end{aligned}
+$$
 
-We assume a log-normal distribution of parameter values within individuals of the study population.  For $P \in (C{L},V)$ we have:
+We assume a log-normal distribution of parameter values within individuals of the study population, thus, for $P \in (C{L},V)$ we have:
 
-$$ P_i = P_{pop} \cdot e^{\eta_{P,i}}, \; \; \eta_{P,i} \in N(0,\omega_{P})$$
+$$ P_i = P_{pop} \cdot e^{\eta_{P,i}}, \; \; \eta_{P,i} \in N(0,\omega^2_{P})$$
 
+## The maturation model   
 There are several methods that can be used to describe the link between PK in adults and 
-children. For this example I use a relatively simplistic approach assuming an emax maturation function for CL dependent on weight (WT) as well as a weight adjusted volume parameter:
+children. For this example we use a relatively simplistic approach assuming an emax maturation function for CL dependent on weight (WT) as well as a weight adjusted volume parameter:
 
 $$ 
   \begin{aligned}
@@ -64,8 +95,8 @@ $$
 
 Where $V_{STD,i}$ and ${CL}_{BASE,i}$ are assumed log-normally distributed as above.
 
-**The Design**   
-In this study we simulate the initial cohort of adult patients using a fixed design and the adult PK model (no maturation).  The parameter estimates from that initial cohort of adult patients is  are then used to optimize   
+## The Design   
+In this study we begin by simulating an initial cohort of adult patients using a fixed design.  Parameter estimates from that initial cohort are then used to optimize the  next cohort.  The commands found below are also available as an R script in the code repository in the directory   
 The first example we will look at is labelled "Example_1_poped_r" in the "examples" folder of the MBAOD package. In this directory there are three things of interest:
 
 1. "Example_1.R" - an R script to run all the code presented here.
@@ -73,14 +104,19 @@ The first example we will look at is labelled "Example_1_poped_r" in the "exampl
 3. "PopED_files" - The PopED model needed to run this example.
 
 
-(@)  My first example will be numbered (1).
-(@)  My second example will be numbered (2).
+```{r}
+    devtools::load_all("/Users/ahooker/Documents/_PROJECTS/AOD/repos/MBAOD")
+    args(mbaod_simulate)
+```
 
-Explanation of examples.
 
-(@)  My third example will be numbered (3).
-Numbered examples can be labeled and referred to elsewhere in the document:
 
-(@good)  This is a good example.
+"design" is a list that defines the initial design for that cohort. The elements of this list are passed to the function `create_design` to create a design object.  
 
-As (@good) illustrates, ...
+```{r}
+    args(create_design)
+```
+
+The allowed arguments shown above are defined (until I write documentation for this function) in the documentation for `?PopEd::create.poped.database`.  Look in the "Arguments" section, under "START OF INITIAL DESIGN OPTIONS".
+
+
