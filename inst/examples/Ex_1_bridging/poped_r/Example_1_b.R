@@ -42,8 +42,9 @@ step_1=list(
 
 step_2 = list(
   design = list(
-    groupsize = 20,
-    a   = c(WT=35),
+    groupsize = 5,
+    m=4,
+    a   = t(rbind(WT=c(5,20,40,50))),
     xt = c(0.5,1,2,3,6,12,24)
   ),
   optimize=list(target="poped_R",
@@ -68,7 +69,7 @@ step_2 = list(
                   bUseStochasticGradient = 0,
                   bUseBFGSMinimizer = 0,
                   bUseLineSearch = 0,
-                  compute_inv=F
+                  compute_inv=T
                 )
   ),
   simulate=list(target="NONMEM", model="./NONMEM_files/sim.mod",
@@ -83,7 +84,12 @@ step_2 = list(
 
 step_3 <- step_2
 step_3$optimize$parameters <- NULL
-
+step_3$design = list(
+  groupsize = 20,
+  m=1,
+  a   = t(rbind(WT=c(35))),
+  xt = c(0.5,1,2,3,6,12,24)
+)
 
 # source("create.poped.database.R")
 # assignInNamespace("create.poped.database",create.poped.database, ns="PopED")
@@ -91,9 +97,10 @@ step_3$optimize$parameters <- NULL
 
 results_all <- mbaod_simulate(cohorts=list(step_1,step_2,step_3), # anything after step_3 is the same as step_3
                               ncohorts=4, # number of steps or cohorts in one AOD
-                              rep=2, #number of times to repeat the MBAOD simulation 
-                              name="Example_1", 
-                              description="4 steps, 1 group per step")
+                              rep=100, #number of times to repeat the MBAOD simulation 
+                              name="Example_1_b", 
+                              description="4 steps, 1st step one group, step 2 three groups, 3-4 have 1 group.  Optimize on dose and sample times"
+)
 
 
 

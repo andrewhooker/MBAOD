@@ -1,40 +1,9 @@
 library(PopED)
 
-PK.1.comp.maturation.fg <- function(x,a,bpop,b,bocc){
-  ## -- parameter definition function 
-  parameters=c( CL=bpop[1]*exp(b[1]),
-                V=bpop[2]*exp(b[2]),
-                EMAX=bpop[3],
-                EC50=bpop[4],
-                HILL=bpop[5],
-                WT=a[1])
-  return( parameters ) 
-}
+## set working directory to the location of this file 
+setwd("/Users/ahooker/Documents/_PROJECTS/AOD/repos/MBAOD/inst/examples/Ex_1_bridging/poped_r_devel/PopED_files")
 
-
-PK.1.comp.maturation.ff <- function(model_switch,xt,parameters,poped.db){
-  with(as.list(parameters),{
-    y=xt
-    
-    CL=CL+(EMAX*WT**HILL)/(EC50**HILL+WT**HILL)
-    V=V*(WT/70)
-    DOSE=1000*(WT/70)
-    y = DOSE/V*exp(-CL/V*xt) 
-       
-    return(list( y= y,poped.db=poped.db))
-  })
-}
-
-feps.add.prop <- function(model_switch,xt,parameters,epsi,poped.db){
-  ## -- Residual Error function
-  ## -- Additive + Proportional 
-  returnArgs <- feval(poped.db$ff_pointer,model_switch,xt,parameters,poped.db) 
-  y <- returnArgs[[1]]
-  poped.db <- returnArgs[[2]]
-  y = y*(1+epsi[,1])+epsi[,2]
-  
-  return(list( y= y,poped.db =poped.db )) 
-}
+source("poped.mod.PK.1.comp.maturation.R")
 
 bpop_vals <- c(CL=1.8,V=20,EMAX=2,EC50=25,HILL=5)
 d_vals <- c(CL=0.05,V=0.05)
@@ -81,4 +50,105 @@ output <- poped_optimize(poped.db,opt_xt=T,opt_a=T)
                                bUseExchangeAlgorithm=1,
                                EAStepSize=1)
 plot_model_prediction(mfea.output$poped.db,IPRED=T,DV=T,separate.groups=F)
+
+
+output <- poped_optimize(poped.db,
+                         opt_xt=T,
+                         opt_a=T,
+                         bUseRandomSearch= 0,
+                         bUseStochasticGradient = 0,
+                         bUseBFGSMinimizer = 0,
+                         bUseLineSearch = 1)
+
+output <- poped_optimize(poped.db,
+                         opt_xt=F,
+                         opt_a=T,
+                         bUseRandomSearch= 1,
+                         bUseStochasticGradient = 0,
+                         bUseBFGSMinimizer = 0,
+                         bUseLineSearch = 0,
+                         rsit=20)
+
+output <- poped_optimize(poped.db,
+                         opt_xt=F,
+                         opt_a=T,
+                         bUseRandomSearch= 0,
+                         bUseStochasticGradient = 0,
+                         bUseBFGSMinimizer = 0,
+                         bUseLineSearch = 1,
+                         rsit=20)
+
+output.1 <- poped_optimize(output$poped.db,
+                         opt_xt=F,
+                         opt_a=T,
+                         bUseRandomSearch= 0,
+                         bUseStochasticGradient = 0,
+                         bUseBFGSMinimizer = 1,
+                         bUseLineSearch = 0,
+                         rsit=20)
+
+output.1 <- poped_optimize(output$poped.db,
+                           opt_xt=T,
+                           opt_a=F,
+                           bUseRandomSearch= 0,
+                           bUseStochasticGradient = 0,
+                           bUseBFGSMinimizer = 0,
+                           bUseLineSearch = 1,
+                           rsit=20)
+
+## any way to speed up the compilation?
+
+library(compiler)
+ff_test <- cmpfun(PK.1.comp.maturation.ff) 
+fg_test <- cmpfun(PK.1.comp.maturation.fg)
+fe_test <- cmpfun(feps.add.prop)
+
+poped.db.2 <- create.poped.database(ff_file="ff_test",
+                                    fError_file="fe_test",
+                                    fg_file="fg_test",
+                                    groupsize=rbind(50,20,20,20),
+                                    m=4,
+                                    sigma=sigma_vals,
+                                    bpop=bpop_vals, 
+                                    d=d_vals, 
+                                    xt=c( 1,2,4,6,8,24),
+                                    minxt=0,
+                                    maxxt=24,
+                                    a=rbind(70,60,50,10),
+                                    maxa=70,
+                                    mina=1)
+
+##  create plot of model 
+plot_model_prediction(poped.db.2)
+plot_model_prediction(poped.db.2,IPRED=T,DV=T,separate.groups=T)
+
+
+## evaluate initial design
+FIM <- evaluate.fim(poped.db.2) 
+FIM
+det(FIM)
+get_rse(FIM,poped.db.2)
+
+evaluate.fim_test <- cmpfun(evaluate.fim)
+poped_optimize_test <- cmpfun(poped_optimize)
+
+
+output <- poped_optimize(poped.db.2,opt_xt=T,opt_a=T)
+mfea.output <- poped_optimize(poped.db.2,opt_a=1,opt_xt=0,
+                              bUseExchangeAlgorithm=1,
+                              EAStepSize=1)
+
+output <- poped_optimize(poped.db.2,
+                         opt_xt=T,
+                         opt_a=T,
+                         bUseRandomSearch= 0,
+                         bUseStochasticGradient = 0,
+                         bUseBFGSMinimizer = 0,
+                         bUseLineSearch = 1)
+
+library(microbenchmark)
+compare <- microbenchmark(evaluate.fim_test(poped.db.2),evaluate.fim(poped.db.1),times=100)
+
+library(ggplot2)
+autoplot(compare)
 

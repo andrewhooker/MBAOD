@@ -1,0 +1,750 @@
+PopED Results 
+
+        2014-10-24 14:14:28
+
+==============================================================================
+Model description : PopED model 
+
+Model Sizes : 
+Number of individual model parameters                  g[j]    : Ng    = 6
+Number of population model fixed parameters            bpop[j] : Nbpop = 5
+Number of population model random effects parameters   b[j]    : Nb    = 2
+
+Typical Population Parameters:
+bpop[1]:   1.8 
+bpop[2]:    20 
+bpop[3]:     2 
+bpop[4]:    25 
+bpop[5]:     5 
+
+Between Subject Variability matrix D (variance units) 
+0.05 0.00
+0.00 0.05
+
+Diagonal Elements of D [sqrt(param)]:
+D[1,1]:  0.05 [0.2236] 
+D[2,2]:  0.05 [0.2236] 
+
+Residual Unexplained Variability matrix SIGMA (variance units) : 
+0.0150 0.0000
+0.0000 0.0015
+
+Diagonal Elements of SIGMA [sqrt(param)]:
+SIGMA[1,1]: 0.015 [0.1225] 
+SIGMA[2,2]: 0.0015 [0.03873] 
+
+==============================================================================
+Experiment description (design and design space)
+
+Numer of individuals: 110
+Number of groups (individuals with same design): 4
+Numer of individuals per group:
+     Group 1: 50
+     Group 2: 20
+     Group 3: 20
+     Group 4: 20
+Numer of samples per group:
+     Group 1: 6
+     Group 2: 6
+     Group 3: 6
+     Group 4: 6
+Number of discrete experimental variables: 0
+Number of model covariates: 1
+
+Initial Sampling Schedule
+Group 1 :      1      2      4      6      8     24
+Group 2 :      1      2      4      6      8     24
+Group 3 :      1      2      4      6      8     24
+Group 4 :      1      2      4      6      8     24
+
+Minimum allowed sampling values
+Group 1 :  1e-05  1e-05  1e-05  1e-05  1e-05  1e-05
+Group 2 :  1e-05  1e-05  1e-05  1e-05  1e-05  1e-05
+Group 3 :  1e-05  1e-05  1e-05  1e-05  1e-05  1e-05
+Group 4 :  1e-05  1e-05  1e-05  1e-05  1e-05  1e-05
+
+Maximum allowed sampling values
+Group 1 :     24     24     24     24     24     24
+Group 2 :     24     24     24     24     24     24
+Group 3 :     24     24     24     24     24     24
+Group 4 :     24     24     24     24     24     24
+
+Covariates:
+Group 1: 29.98
+Group 2: 70
+Group 3: 20.32
+Group 4: 5.14
+
+===============================================================================
+Initial design evaluation
+
+OFV = 8.20414e+26
+
+Efficiency criterion [usually defined as OFV^(1/npar)]  = 978.246
+
+Initial design expected parameter variance 
+and relative standard error (%RSE)
+    Parameter    Values   Variance     RSE
+      bpop[1]    1.8000   9.71e-03    5.48
+      bpop[2]   20.0000   2.25e-01    2.37
+      bpop[3]    2.0000   2.14e-02    7.32
+      bpop[4]   25.0000   1.28e+00    4.52
+      bpop[5]    5.0000   7.81e-01   17.67
+       D[1,1]    0.0500   6.54e-05   16.18
+       D[2,2]    0.0500   6.56e-05   16.20
+   SIGMA[1,1]    0.0150   1.44e-06    8.00
+   SIGMA[2,2]    0.0015   3.51e-08   12.49
+
+==============================================================================
+Criterion Specification
+
+OFV calculation for FIM: 1 
+  1=Determinant of FIM,
+  4=log determinant of FIM,
+  6=determinant of interesting part of FIM (Ds)
+
+Approximation method: 0
+  0=FO, 
+  1=FOCE, 
+  2=FOCEI, 
+  3=FOI
+
+Fisher Information Matrix type: 1
+  0=Full FIM,
+  1=Reduced FIM,
+  2=weighted models,
+  3=Loc models,
+  4=reduced FIM with derivative of SD of sigma as pfim,
+  5=FULL FIM parameterized with A,B,C matrices & derivative of variance,
+  6=Calculate one model switch at a time, good for large matrices,
+  7=Reduced FIM parameterized with A,B,C matrices & derivative of variance
+
+Design family: 1
+  D-family design (1) or 
+  ED-familty design (0) 
+  (with or without parameter uncertainty)
+
+==============================================================================
+Optimization of design parameters
+
+* Optimize Sampling Schedule
+
+
+*****************************
+            Line Search
+
+group 2 -- xt[4] changed from  6 to  1e-05
+     OFV(MF) changed from 8.20414e+26 to 8.32941e+26 
+group 2 -- xt[3] changed from  4 to  1e-05
+     OFV(MF) changed from 8.32941e+26 to 8.35972e+26 
+group 2 -- xt[5] changed from  8 to  3.36001
+     OFV(MF) changed from 8.35972e+26 to 8.36128e+26 
+group 2 -- xt[5] changed from  3.36001 to  3.84001
+     OFV(MF) changed from 8.36128e+26 to 8.36358e+26 
+group 2 -- xt[5] changed from  3.84001 to  4.32001
+     OFV(MF) changed from 8.36358e+26 to 8.36531e+26 
+group 2 -- xt[5] changed from  4.32001 to  4.80001
+     OFV(MF) changed from 8.36531e+26 to 8.36646e+26 
+group 2 -- xt[5] changed from  4.80001 to  5.28001
+     OFV(MF) changed from 8.36646e+26 to 8.36703e+26 
+group 2 -- xt[2] changed from  2 to  2.40001
+     OFV(MF) changed from 8.36703e+26 to 8.36776e+26 
+group 2 -- xt[2] changed from  2.40001 to  2.88001
+     OFV(MF) changed from 8.36776e+26 to 8.3681e+26 
+group 2 -- xt[1] changed from  1 to  1.44001
+     OFV(MF) changed from 8.3681e+26 to 8.36834e+26 
+group 2 -- xt[6] changed from  24 to  17.28
+     OFV(MF) changed from 8.36834e+26 to 8.37659e+26 
+group 2 -- xt[6] changed from  17.28 to  17.76
+     OFV(MF) changed from 8.37659e+26 to 8.38882e+26 
+group 2 -- xt[6] changed from  17.76 to  18.24
+     OFV(MF) changed from 8.38882e+26 to 8.39883e+26 
+group 2 -- xt[6] changed from  18.24 to  18.72
+     OFV(MF) changed from 8.39883e+26 to 8.40676e+26 
+group 2 -- xt[6] changed from  18.72 to  19.2
+     OFV(MF) changed from 8.40676e+26 to 8.41275e+26 
+group 2 -- xt[6] changed from  19.2 to  19.68
+     OFV(MF) changed from 8.41275e+26 to 8.41686e+26 
+group 2 -- xt[6] changed from  19.68 to  20.16
+     OFV(MF) changed from 8.41686e+26 to 8.41916e+26 
+group 2 -- xt[6] changed from  20.16 to  20.64
+     OFV(MF) changed from 8.41916e+26 to 8.41965e+26 
+group 4 -- xt[1] changed from  1 to  1e-05
+     OFV(MF) changed from 8.41965e+26 to 9.48083e+26 
+group 4 -- xt[5] changed from  8 to  8.16001
+     OFV(MF) changed from 9.48083e+26 to 9.48111e+26 
+group 4 -- xt[5] changed from  8.16001 to  8.64001
+     OFV(MF) changed from 9.48111e+26 to 9.48154e+26 
+group 4 -- xt[5] changed from  8.64001 to  9.12001
+     OFV(MF) changed from 9.48154e+26 to 9.48169e+26 
+group 4 -- xt[5] changed from  9.12001 to  9.60001
+     OFV(MF) changed from 9.48169e+26 to 9.48174e+26 
+group 4 -- xt[5] changed from  9.60001 to  10.08
+     OFV(MF) changed from 9.48174e+26 to 9.48176e+26 
+group 4 -- xt[5] changed from  10.08 to  10.56
+     OFV(MF) changed from 9.48176e+26 to 9.48176e+26 
+group 4 -- xt[5] changed from  10.56 to  11.04
+     OFV(MF) changed from 9.48176e+26 to 9.48176e+26 
+group 4 -- xt[5] changed from  11.04 to  11.52
+     OFV(MF) changed from 9.48176e+26 to 9.48177e+26 
+group 4 -- xt[5] changed from  11.52 to  12
+     OFV(MF) changed from 9.48177e+26 to 9.48177e+26 
+group 4 -- xt[5] changed from  12 to  12.48
+     OFV(MF) changed from 9.48177e+26 to 9.48177e+26 
+group 4 -- xt[5] changed from  12.48 to  12.96
+     OFV(MF) changed from 9.48177e+26 to 9.48177e+26 
+group 4 -- xt[5] changed from  12.96 to  13.44
+     OFV(MF) changed from 9.48177e+26 to 9.48177e+26 
+group 4 -- xt[5] changed from  13.44 to  13.92
+     OFV(MF) changed from 9.48177e+26 to 9.48177e+26 
+group 4 -- xt[5] changed from  13.92 to  14.4
+     OFV(MF) changed from 9.48177e+26 to 9.48177e+26 
+group 4 -- xt[5] changed from  14.4 to  14.88
+     OFV(MF) changed from 9.48177e+26 to 9.48177e+26 
+group 4 -- xt[5] changed from  14.88 to  15.36
+     OFV(MF) changed from 9.48177e+26 to 9.48177e+26 
+group 4 -- xt[5] changed from  15.36 to  15.84
+     OFV(MF) changed from 9.48177e+26 to 9.48177e+26 
+group 4 -- xt[5] changed from  15.84 to  16.32
+     OFV(MF) changed from 9.48177e+26 to 9.48177e+26 
+group 4 -- xt[5] changed from  16.32 to  16.8
+     OFV(MF) changed from 9.48177e+26 to 9.48177e+26 
+group 4 -- xt[5] changed from  16.8 to  17.28
+     OFV(MF) changed from 9.48177e+26 to 9.48177e+26 
+group 4 -- xt[5] changed from  17.28 to  17.76
+     OFV(MF) changed from 9.48177e+26 to 9.48177e+26 
+group 4 -- xt[5] changed from  17.76 to  18.24
+     OFV(MF) changed from 9.48177e+26 to 9.48177e+26 
+group 4 -- xt[3] changed from  4 to  1e-05
+     OFV(MF) changed from 9.48177e+26 to 1.01491e+27 
+group 4 -- xt[2] changed from  2 to  2.40001
+     OFV(MF) changed from 1.01491e+27 to 1.02709e+27 
+group 4 -- xt[2] changed from  2.40001 to  2.88001
+     OFV(MF) changed from 1.02709e+27 to 1.03277e+27 
+group 4 -- xt[2] changed from  2.88001 to  3.36001
+     OFV(MF) changed from 1.03277e+27 to 1.03286e+27 
+group 4 -- xt[4] changed from  6 to  6.24001
+     OFV(MF) changed from 1.03286e+27 to 1.03791e+27 
+group 4 -- xt[4] changed from  6.24001 to  6.72001
+     OFV(MF) changed from 1.03791e+27 to 1.043e+27 
+group 4 -- xt[4] changed from  6.72001 to  7.20001
+     OFV(MF) changed from 1.043e+27 to 1.04487e+27 
+group 4 -- xt[4] changed from  7.20001 to  7.68001
+     OFV(MF) changed from 1.04487e+27 to 1.04553e+27 
+group 4 -- xt[4] changed from  7.68001 to  8.16001
+     OFV(MF) changed from 1.04553e+27 to 1.04576e+27 
+group 4 -- xt[4] changed from  8.16001 to  8.64001
+     OFV(MF) changed from 1.04576e+27 to 1.04584e+27 
+group 4 -- xt[4] changed from  8.64001 to  9.12001
+     OFV(MF) changed from 1.04584e+27 to 1.04587e+27 
+group 4 -- xt[4] changed from  9.12001 to  9.60001
+     OFV(MF) changed from 1.04587e+27 to 1.04588e+27 
+group 4 -- xt[4] changed from  9.60001 to  10.08
+     OFV(MF) changed from 1.04588e+27 to 1.04588e+27 
+group 4 -- xt[4] changed from  10.08 to  10.56
+     OFV(MF) changed from 1.04588e+27 to 1.04588e+27 
+group 4 -- xt[4] changed from  10.56 to  11.04
+     OFV(MF) changed from 1.04588e+27 to 1.04588e+27 
+group 4 -- xt[4] changed from  11.04 to  11.52
+     OFV(MF) changed from 1.04588e+27 to 1.04588e+27 
+group 4 -- xt[4] changed from  11.52 to  12
+     OFV(MF) changed from 1.04588e+27 to 1.04588e+27 
+group 4 -- xt[4] changed from  12 to  12.48
+     OFV(MF) changed from 1.04588e+27 to 1.04588e+27 
+group 4 -- xt[4] changed from  12.48 to  12.96
+     OFV(MF) changed from 1.04588e+27 to 1.04588e+27 
+group 4 -- xt[4] changed from  12.96 to  13.44
+     OFV(MF) changed from 1.04588e+27 to 1.04588e+27 
+group 4 -- xt[4] changed from  13.44 to  13.92
+     OFV(MF) changed from 1.04588e+27 to 1.04588e+27 
+group 4 -- xt[4] changed from  13.92 to  14.4
+     OFV(MF) changed from 1.04588e+27 to 1.04588e+27 
+group 4 -- xt[4] changed from  14.4 to  14.88
+     OFV(MF) changed from 1.04588e+27 to 1.04588e+27 
+group 4 -- xt[4] changed from  14.88 to  15.36
+     OFV(MF) changed from 1.04588e+27 to 1.04588e+27 
+group 4 -- xt[4] changed from  15.36 to  15.84
+     OFV(MF) changed from 1.04588e+27 to 1.04588e+27 
+group 4 -- xt[4] changed from  15.84 to  16.32
+     OFV(MF) changed from 1.04588e+27 to 1.04588e+27 
+group 4 -- xt[4] changed from  16.32 to  16.8
+     OFV(MF) changed from 1.04588e+27 to 1.04588e+27 
+group 4 -- xt[4] changed from  16.8 to  17.28
+     OFV(MF) changed from 1.04588e+27 to 1.04588e+27 
+group 4 -- xt[4] changed from  17.28 to  17.76
+     OFV(MF) changed from 1.04588e+27 to 1.04588e+27 
+group 4 -- xt[4] changed from  17.76 to  18.24
+     OFV(MF) changed from 1.04588e+27 to 1.04588e+27 
+group 4 -- xt[4] changed from  18.24 to  18.72
+     OFV(MF) changed from 1.04588e+27 to 1.04588e+27 
+group 3 -- xt[5] changed from  8 to  1e-05
+     OFV(MF) changed from 1.04588e+27 to 1.11498e+27 
+group 3 -- xt[4] changed from  6 to  6.24001
+     OFV(MF) changed from 1.11498e+27 to 1.11669e+27 
+group 3 -- xt[4] changed from  6.24001 to  6.72001
+     OFV(MF) changed from 1.11669e+27 to 1.11956e+27 
+group 3 -- xt[4] changed from  6.72001 to  7.20001
+     OFV(MF) changed from 1.11956e+27 to 1.1218e+27 
+group 3 -- xt[4] changed from  7.20001 to  7.68001
+     OFV(MF) changed from 1.1218e+27 to 1.12352e+27 
+group 3 -- xt[4] changed from  7.68001 to  8.16001
+     OFV(MF) changed from 1.12352e+27 to 1.12478e+27 
+group 3 -- xt[4] changed from  8.16001 to  8.64001
+     OFV(MF) changed from 1.12478e+27 to 1.12565e+27 
+group 3 -- xt[4] changed from  8.64001 to  9.12001
+     OFV(MF) changed from 1.12565e+27 to 1.12615e+27 
+group 3 -- xt[4] changed from  9.12001 to  9.60001
+     OFV(MF) changed from 1.12615e+27 to 1.12629e+27 
+group 3 -- xt[2] changed from  2 to  1e-05
+     OFV(MF) changed from 1.12629e+27 to 1.13998e+27 
+group 3 -- xt[2] changed from  1e-05 to  17.76
+     OFV(MF) changed from 1.13998e+27 to 1.14386e+27 
+group 3 -- xt[2] changed from  17.76 to  18.24
+     OFV(MF) changed from 1.14386e+27 to 1.14904e+27 
+group 3 -- xt[2] changed from  18.24 to  18.72
+     OFV(MF) changed from 1.14904e+27 to 1.15298e+27 
+group 3 -- xt[2] changed from  18.72 to  19.2
+     OFV(MF) changed from 1.15298e+27 to 1.15593e+27 
+group 3 -- xt[2] changed from  19.2 to  19.68
+     OFV(MF) changed from 1.15593e+27 to 1.15811e+27 
+group 3 -- xt[2] changed from  19.68 to  20.16
+     OFV(MF) changed from 1.15811e+27 to 1.15971e+27 
+group 3 -- xt[2] changed from  20.16 to  20.64
+     OFV(MF) changed from 1.15971e+27 to 1.16086e+27 
+group 3 -- xt[2] changed from  20.64 to  21.12
+     OFV(MF) changed from 1.16086e+27 to 1.1617e+27 
+group 3 -- xt[2] changed from  21.12 to  21.6
+     OFV(MF) changed from 1.1617e+27 to 1.16229e+27 
+group 3 -- xt[2] changed from  21.6 to  22.08
+     OFV(MF) changed from 1.16229e+27 to 1.16272e+27 
+group 3 -- xt[2] changed from  22.08 to  22.56
+     OFV(MF) changed from 1.16272e+27 to 1.16303e+27 
+group 3 -- xt[2] changed from  22.56 to  23.04
+     OFV(MF) changed from 1.16303e+27 to 1.16324e+27 
+group 3 -- xt[2] changed from  23.04 to  23.52
+     OFV(MF) changed from 1.16324e+27 to 1.1634e+27 
+group 3 -- xt[2] changed from  23.52 to  24
+     OFV(MF) changed from 1.1634e+27 to 1.16351e+27 
+group 3 -- xt[1] changed from  1 to  1e-05
+     OFV(MF) changed from 1.16351e+27 to 1.17588e+27 
+group 3 -- xt[3] changed from  4 to  1e-05
+     OFV(MF) changed from 1.17588e+27 to 1.19673e+27 
+group 1 -- xt[4] changed from  6 to  1e-05
+     OFV(MF) changed from 1.19673e+27 to 1.38822e+27 
+group 1 -- xt[5] changed from  8 to  8.16001
+     OFV(MF) changed from 1.38822e+27 to 1.38993e+27 
+group 1 -- xt[5] changed from  8.16001 to  8.64001
+     OFV(MF) changed from 1.38993e+27 to 1.39416e+27 
+group 1 -- xt[5] changed from  8.64001 to  9.12001
+     OFV(MF) changed from 1.39416e+27 to 1.39716e+27 
+group 1 -- xt[5] changed from  9.12001 to  9.60001
+     OFV(MF) changed from 1.39716e+27 to 1.39906e+27 
+group 1 -- xt[5] changed from  9.60001 to  10.08
+     OFV(MF) changed from 1.39906e+27 to 1.39989e+27 
+group 1 -- xt[3] changed from  4 to  1e-05
+     OFV(MF) changed from 1.39989e+27 to 1.44862e+27 
+group 1 -- xt[1] changed from  1 to  1e-05
+     OFV(MF) changed from 1.44862e+27 to 1.45374e+27 
+group 1 -- xt[1] changed from  1e-05 to  21.6
+     OFV(MF) changed from 1.45374e+27 to 1.45543e+27 
+group 1 -- xt[1] changed from  21.6 to  22.08
+     OFV(MF) changed from 1.45543e+27 to 1.45775e+27 
+group 1 -- xt[1] changed from  22.08 to  22.56
+     OFV(MF) changed from 1.45775e+27 to 1.45945e+27 
+group 1 -- xt[1] changed from  22.56 to  23.04
+     OFV(MF) changed from 1.45945e+27 to 1.4607e+27 
+group 1 -- xt[1] changed from  23.04 to  23.52
+     OFV(MF) changed from 1.4607e+27 to 1.46161e+27 
+group 1 -- xt[1] changed from  23.52 to  24
+     OFV(MF) changed from 1.46161e+27 to 1.46227e+27 
+group 1 -- xt[2] changed from  2 to  1e-05
+     OFV(MF) changed from 1.46227e+27 to 1.48123e+27 
+
+Best value for OFV(MF) = 1.48123e+27
+
+Best value for xt:
+Group 1 :  1e-05  1e-05  1e-05  10.08     24     24
+Group 2 :  1e-05  1e-05   1.44   2.88   5.28  20.64
+Group 3 :  1e-05  1e-05  1e-05    9.6     24     24
+Group 4 :  1e-05  1e-05   3.36  18.24  18.72     24
+
+
+Line search run time: 83.013 seconds
+***************************
+
+*****************************
+            Line Search
+
+group 4 -- xt[5] changed from  18.24 to  1e-05
+     OFV(MF) changed from 1.48123e+27 to 1.51757e+27 
+group 4 -- xt[2] changed from  3.36001 to  2.88001
+     OFV(MF) changed from 1.51757e+27 to 1.51838e+27 
+group 2 -- xt[6] changed from  20.64 to  20.16
+     OFV(MF) changed from 1.51838e+27 to 1.51838e+27 
+group 2 -- xt[1] changed from  1.44001 to  1.92001
+     OFV(MF) changed from 1.51838e+27 to 1.51839e+27 
+group 2 -- xt[5] changed from  5.28001 to  5.76001
+     OFV(MF) changed from 1.51839e+27 to 1.51844e+27 
+
+Best value for OFV(MF) = 1.51844e+27
+
+Best value for xt:
+Group 1 :  1e-05  1e-05  1e-05  10.08     24     24
+Group 2 :  1e-05  1e-05   1.92   2.88   5.76  20.16
+Group 3 :  1e-05  1e-05  1e-05    9.6     24     24
+Group 4 :  1e-05  1e-05  1e-05   2.88  18.72     24
+
+
+Line search run time: 85.584 seconds
+***************************
+
+*****************************
+            Line Search
+
+group 4 -- xt[4] changed from  18.72 to  19.2
+     OFV(MF) changed from 1.51844e+27 to 1.51844e+27 
+group 2 -- xt[1] changed from  1.92001 to  0.48001
+     OFV(MF) changed from 1.51844e+27 to 1.51844e+27 
+group 2 -- xt[1] changed from  0.48001 to  0.96001
+     OFV(MF) changed from 1.51844e+27 to 1.51852e+27 
+group 2 -- xt[2] changed from  2.88001 to  3.36001
+     OFV(MF) changed from 1.51852e+27 to 1.51859e+27 
+group 2 -- xt[5] changed from  5.76001 to  6.24001
+     OFV(MF) changed from 1.51859e+27 to 1.51865e+27 
+
+Best value for OFV(MF) = 1.51865e+27
+
+Best value for xt:
+Group 1 :  1e-05  1e-05  1e-05  10.08     24     24
+Group 2 :  1e-05  1e-05   0.96   3.36   6.24  20.16
+Group 3 :  1e-05  1e-05  1e-05    9.6     24     24
+Group 4 :  1e-05  1e-05  1e-05   2.88   19.2     24
+
+
+Line search run time: 89.306 seconds
+***************************
+
+*****************************
+            Line Search
+
+group 2 -- xt[2] changed from  3.36001 to  2.88001
+     OFV(MF) changed from 1.51865e+27 to 1.51868e+27 
+group 2 -- xt[5] changed from  6.24001 to  6.72001
+     OFV(MF) changed from 1.51868e+27 to 1.51875e+27 
+group 2 -- xt[1] changed from  0.96001 to  1e-05
+     OFV(MF) changed from 1.51875e+27 to 1.51889e+27 
+
+Best value for OFV(MF) = 1.51889e+27
+
+Best value for xt:
+Group 1 :  1e-05  1e-05  1e-05  10.08     24     24
+Group 2 :  1e-05  1e-05  1e-05   2.88   6.72  20.16
+Group 3 :  1e-05  1e-05  1e-05    9.6     24     24
+Group 4 :  1e-05  1e-05  1e-05   2.88   19.2     24
+
+
+Line search run time: 87.842 seconds
+***************************
+
+*****************************
+            Line Search
+
+group 2 -- xt[5] changed from  6.72001 to  7.20001
+     OFV(MF) changed from 1.51889e+27 to 1.51906e+27 
+group 2 -- xt[5] changed from  7.20001 to  7.68001
+     OFV(MF) changed from 1.51906e+27 to 1.51915e+27 
+group 2 -- xt[5] changed from  7.68001 to  8.16001
+     OFV(MF) changed from 1.51915e+27 to 1.51915e+27 
+group 2 -- xt[6] changed from  20.16 to  19.2
+     OFV(MF) changed from 1.51915e+27 to 1.51928e+27 
+group 2 -- xt[6] changed from  19.2 to  19.68
+     OFV(MF) changed from 1.51928e+27 to 1.51936e+27 
+group 2 -- xt[2] changed from  2.88001 to  1.44001
+     OFV(MF) changed from 1.51936e+27 to 1.51938e+27 
+group 2 -- xt[2] changed from  1.44001 to  1.92001
+     OFV(MF) changed from 1.51938e+27 to 1.51945e+27 
+
+Best value for OFV(MF) = 1.51945e+27
+
+Best value for xt:
+Group 1 :  1e-05  1e-05  1e-05  10.08     24     24
+Group 2 :  1e-05  1e-05  1e-05   1.92   8.16  19.68
+Group 3 :  1e-05  1e-05  1e-05    9.6     24     24
+Group 4 :  1e-05  1e-05  1e-05   2.88   19.2     24
+
+
+Line search run time: 88.989 seconds
+***************************
+
+*****************************
+            Line Search
+
+group 2 -- xt[5] changed from  8.16001 to  8.64001
+     OFV(MF) changed from 1.51945e+27 to 1.51966e+27 
+group 2 -- xt[5] changed from  8.64001 to  9.12001
+     OFV(MF) changed from 1.51966e+27 to 1.51979e+27 
+group 2 -- xt[5] changed from  9.12001 to  9.60001
+     OFV(MF) changed from 1.51979e+27 to 1.51983e+27 
+group 2 -- xt[6] changed from  19.68 to  18.72
+     OFV(MF) changed from 1.51983e+27 to 1.51991e+27 
+group 2 -- xt[6] changed from  18.72 to  19.2
+     OFV(MF) changed from 1.51991e+27 to 1.52e+27 
+
+Best value for OFV(MF) = 1.52e+27
+
+Best value for xt:
+Group 1 :  1e-05  1e-05  1e-05  10.08     24     24
+Group 2 :  1e-05  1e-05  1e-05   1.92    9.6   19.2
+Group 3 :  1e-05  1e-05  1e-05    9.6     24     24
+Group 4 :  1e-05  1e-05  1e-05   2.88   19.2     24
+
+
+Line search run time: 91.23 seconds
+***************************
+
+*****************************
+            Line Search
+
+group 2 -- xt[2] changed from  1.92001 to  1e-05
+     OFV(MF) changed from 1.52e+27 to 1.52018e+27 
+group 2 -- xt[2] changed from  1e-05 to  0.48001
+     OFV(MF) changed from 1.52018e+27 to 1.52024e+27 
+group 2 -- xt[5] changed from  9.60001 to  10.08
+     OFV(MF) changed from 1.52024e+27 to 1.52058e+27 
+group 2 -- xt[5] changed from  10.08 to  10.56
+     OFV(MF) changed from 1.52058e+27 to 1.52082e+27 
+group 2 -- xt[5] changed from  10.56 to  11.04
+     OFV(MF) changed from 1.52082e+27 to 1.52097e+27 
+group 2 -- xt[5] changed from  11.04 to  11.52
+     OFV(MF) changed from 1.52097e+27 to 1.52103e+27 
+
+Best value for OFV(MF) = 1.52103e+27
+
+Best value for xt:
+Group 1 :  1e-05  1e-05  1e-05  10.08     24     24
+Group 2 :  1e-05  1e-05  1e-05   0.48  11.52   19.2
+Group 3 :  1e-05  1e-05  1e-05    9.6     24     24
+Group 4 :  1e-05  1e-05  1e-05   2.88   19.2     24
+
+
+Line search run time: 96.643 seconds
+***************************
+
+*****************************
+            Line Search
+
+group 2 -- xt[2] changed from  0.48001 to  1e-05
+     OFV(MF) changed from 1.52103e+27 to 1.5213e+27 
+group 2 -- xt[6] changed from  19.2 to  18.24
+     OFV(MF) changed from 1.5213e+27 to 1.5215e+27 
+group 2 -- xt[6] changed from  18.24 to  18.72
+     OFV(MF) changed from 1.5215e+27 to 1.52152e+27 
+
+Best value for OFV(MF) = 1.52152e+27
+
+Best value for xt:
+Group 1 :  1e-05  1e-05  1e-05  10.08     24     24
+Group 2 :  1e-05  1e-05  1e-05  1e-05  11.52  18.72
+Group 3 :  1e-05  1e-05  1e-05    9.6     24     24
+Group 4 :  1e-05  1e-05  1e-05   2.88   19.2     24
+
+
+Line search run time: 97.957 seconds
+***************************
+
+*****************************
+            Line Search
+
+group 2 -- xt[5] changed from  11.52 to  12
+     OFV(MF) changed from 1.52152e+27 to 1.52169e+27 
+group 2 -- xt[5] changed from  12 to  12.48
+     OFV(MF) changed from 1.52169e+27 to 1.52176e+27 
+group 2 -- xt[6] changed from  18.72 to  17.28
+     OFV(MF) changed from 1.52176e+27 to 1.52178e+27 
+group 2 -- xt[6] changed from  17.28 to  17.76
+     OFV(MF) changed from 1.52178e+27 to 1.52199e+27 
+
+Best value for OFV(MF) = 1.52199e+27
+
+Best value for xt:
+Group 1 :  1e-05  1e-05  1e-05  10.08     24     24
+Group 2 :  1e-05  1e-05  1e-05  1e-05  12.48  17.76
+Group 3 :  1e-05  1e-05  1e-05    9.6     24     24
+Group 4 :  1e-05  1e-05  1e-05   2.88   19.2     24
+
+
+Line search run time: 87.266 seconds
+***************************
+
+*****************************
+            Line Search
+
+group 2 -- xt[5] changed from  12.48 to  12.96
+     OFV(MF) changed from 1.52199e+27 to 1.5222e+27 
+group 2 -- xt[5] changed from  12.96 to  13.44
+     OFV(MF) changed from 1.5222e+27 to 1.52231e+27 
+group 2 -- xt[5] changed from  13.44 to  13.92
+     OFV(MF) changed from 1.52231e+27 to 1.52232e+27 
+group 2 -- xt[6] changed from  17.76 to  16.8
+     OFV(MF) changed from 1.52232e+27 to 1.52248e+27 
+group 2 -- xt[6] changed from  16.8 to  17.28
+     OFV(MF) changed from 1.52248e+27 to 1.52249e+27 
+
+Best value for OFV(MF) = 1.52249e+27
+
+Best value for xt:
+Group 1 :  1e-05  1e-05  1e-05  10.08     24     24
+Group 2 :  1e-05  1e-05  1e-05  1e-05  13.92  17.28
+Group 3 :  1e-05  1e-05  1e-05    9.6     24     24
+Group 4 :  1e-05  1e-05  1e-05   2.88   19.2     24
+
+
+Line search run time: 85.277 seconds
+***************************
+
+*****************************
+            Line Search
+
+group 2 -- xt[5] changed from  13.92 to  14.4
+     OFV(MF) changed from 1.52249e+27 to 1.5225e+27 
+group 2 -- xt[6] changed from  17.28 to  16.32
+     OFV(MF) changed from 1.5225e+27 to 1.52256e+27 
+group 2 -- xt[6] changed from  16.32 to  16.8
+     OFV(MF) changed from 1.52256e+27 to 1.52261e+27 
+
+Best value for OFV(MF) = 1.52261e+27
+
+Best value for xt:
+Group 1 :  1e-05  1e-05  1e-05  10.08     24     24
+Group 2 :  1e-05  1e-05  1e-05  1e-05   14.4   16.8
+Group 3 :  1e-05  1e-05  1e-05    9.6     24     24
+Group 4 :  1e-05  1e-05  1e-05   2.88   19.2     24
+
+
+Line search run time: 82.893 seconds
+***************************
+
+*****************************
+            Line Search
+
+group 2 -- xt[5] changed from  14.4 to  14.88
+     OFV(MF) changed from 1.52261e+27 to 1.52263e+27 
+group 2 -- xt[6] changed from  16.8 to  16.32
+     OFV(MF) changed from 1.52263e+27 to 1.52269e+27 
+
+Best value for OFV(MF) = 1.52269e+27
+
+Best value for xt:
+Group 1 :  1e-05  1e-05  1e-05  10.08     24     24
+Group 2 :  1e-05  1e-05  1e-05  1e-05  14.88  16.32
+Group 3 :  1e-05  1e-05  1e-05    9.6     24     24
+Group 4 :  1e-05  1e-05  1e-05   2.88   19.2     24
+
+
+Line search run time: 84.045 seconds
+***************************
+
+*****************************
+            Line Search
+
+group 2 -- xt[5] changed from  14.88 to  15.36
+     OFV(MF) changed from 1.52269e+27 to 1.5227e+27 
+
+Best value for OFV(MF) = 1.5227e+27
+
+Best value for xt:
+Group 1 :  1e-05  1e-05  1e-05  10.08     24     24
+Group 2 :  1e-05  1e-05  1e-05  1e-05  15.36  16.32
+Group 3 :  1e-05  1e-05  1e-05    9.6     24     24
+Group 4 :  1e-05  1e-05  1e-05   2.88   19.2     24
+
+
+Line search run time: 84.549 seconds
+***************************
+
+*****************************
+            Line Search
+
+group 2 -- xt[6] changed from  16.32 to  15.84
+     OFV(MF) changed from 1.5227e+27 to 1.52273e+27 
+
+Best value for OFV(MF) = 1.52273e+27
+
+Best value for xt:
+Group 1 :  1e-05  1e-05  1e-05  10.08     24     24
+Group 2 :  1e-05  1e-05  1e-05  1e-05  15.36  15.84
+Group 3 :  1e-05  1e-05  1e-05    9.6     24     24
+Group 4 :  1e-05  1e-05  1e-05   2.88   19.2     24
+
+
+Line search run time: 87.536 seconds
+***************************
+
+*****************************
+            Line Search
+
+
+Best value for OFV(MF) = 1.52273e+27
+
+Best value for xt:
+Group 1 :  1e-05  1e-05  1e-05  10.08     24     24
+Group 2 :  1e-05  1e-05  1e-05  1e-05  15.36  15.84
+Group 3 :  1e-05  1e-05  1e-05    9.6     24     24
+Group 4 :  1e-05  1e-05  1e-05   2.88   19.2     24
+
+
+Line search run time: 86.538 seconds
+***************************
+
+===============================================================================
+FINAL RESULTS
+
+Optimized Sampling Schedule
+Group 1 :  1e-05  1e-05  1e-05  10.08     24     24
+Group 2 :  1e-05  1e-05  1e-05  1e-05  15.36  15.84
+Group 3 :  1e-05  1e-05  1e-05    9.6     24     24
+Group 4 :  1e-05  1e-05  1e-05   2.88   19.2     24
+
+ FIM: 
+ 5.780937e+02 -5.137713e+00  3.089099e+02 -2.932280e+01  1.089865e+01  0.000000e+00  0.000000e+00  0.000000e+00  0.000000e+00
+-5.137713e+00  5.068998e+00 -3.042284e+00  2.907475e-01 -1.423243e-01  0.000000e+00  0.000000e+00  0.000000e+00  0.000000e+00
+ 3.089099e+02 -3.042284e+00  2.356029e+02 -1.710780e+01  1.218376e+01  0.000000e+00  0.000000e+00  0.000000e+00  0.000000e+00
+-2.932280e+01  2.907475e-01 -1.710780e+01  2.342704e+00 -8.484157e-01  0.000000e+00  0.000000e+00  0.000000e+00  0.000000e+00
+ 1.089865e+01 -1.423243e-01  1.218376e+01 -8.484157e-01  2.110743e+00  0.000000e+00  0.000000e+00  0.000000e+00  0.000000e+00
+ 0.000000e+00  0.000000e+00  0.000000e+00  0.000000e+00  0.000000e+00  1.599774e+04  1.597115e+02  8.402927e+03  1.730201e+03
+ 0.000000e+00  0.000000e+00  0.000000e+00  0.000000e+00  0.000000e+00  1.597115e+02  1.868859e+04  4.754910e+03  4.048915e+01
+ 0.000000e+00  0.000000e+00  0.000000e+00  0.000000e+00  0.000000e+00  8.402927e+03  4.754910e+03  5.873039e+05  1.388039e+04
+ 0.000000e+00  0.000000e+00  0.000000e+00  0.000000e+00  0.000000e+00  1.730201e+03  4.048915e+01  1.388039e+04  3.987344e+07
+
+
+Inverse(FIM):
+ 8.777799e-03  1.170031e-03 -9.063475e-03  5.395138e-02  2.875801e-02  0.000000e+00  0.000000e+00  0.000000e+00  0.000000e+00
+ 1.170031e-03  1.991541e-01  5.368937e-04 -5.381322e-03  2.125193e-03  0.000000e+00  0.000000e+00  0.000000e+00  0.000000e+00
+-9.063475e-03  5.368937e-04  2.038826e-02  1.137246e-02 -6.628049e-02  0.000000e+00  0.000000e+00  0.000000e+00  0.000000e+00
+ 5.395138e-02 -5.381322e-03  1.137246e-02  1.241845e+00  1.545799e-01  0.000000e+00  0.000000e+00  0.000000e+00  0.000000e+00
+ 2.875801e-02  2.125193e-03 -6.628049e-02  1.545799e-01  7.701423e-01  0.000000e+00  0.000000e+00  0.000000e+00  0.000000e+00
+ 0.000000e+00  0.000000e+00  0.000000e+00  0.000000e+00  0.000000e+00  6.298417e-05 -3.096264e-07 -8.985902e-07 -2.419905e-09
+ 0.000000e+00  0.000000e+00  0.000000e+00  0.000000e+00  0.000000e+00 -3.096264e-07  5.362055e-05 -4.296935e-07  1.085680e-10
+ 0.000000e+00  0.000000e+00  0.000000e+00  0.000000e+00  0.000000e+00 -8.985902e-07 -4.296935e-07  1.719045e-06 -5.589905e-10
+ 0.000000e+00  0.000000e+00  0.000000e+00  0.000000e+00  0.000000e+00 -2.419905e-09  1.085680e-10 -5.589905e-10  2.507965e-08
+
+det(FIM) = 1.52273e+27
+
+Efficiency criterion [usually defined as OFV^(1/npar)]  = 1047.83
+
+Efficiency (final_design/initial_design): 1.07113
+
+Expected parameter variance 
+and relative standard error (%RSE):
+    Parameter    Values   Variance     RSE   RSE_initial_design
+      bpop[1]    1.8000   8.78e-03    5.20                 5.48
+      bpop[2]   20.0000   1.99e-01    2.23                 2.37
+      bpop[3]    2.0000   2.04e-02    7.14                 7.32
+      bpop[4]   25.0000   1.24e+00    4.46                 4.52
+      bpop[5]    5.0000   7.70e-01   17.55                17.67
+       D[1,1]    0.0500   6.30e-05   15.87                16.18
+       D[2,2]    0.0500   5.36e-05   14.65                16.20
+   SIGMA[1,1]    0.0150   1.72e-06    8.74                 8.00
+   SIGMA[2,2]    0.0015   2.51e-08   10.56                12.49
+
+Total running time: 1318.68 seconds
