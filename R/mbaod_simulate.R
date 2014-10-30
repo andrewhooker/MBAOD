@@ -1,6 +1,6 @@
 mbaod_simulate <- function(cohorts,                
-                           ncohorts,
-                           rep,      
+                           ncohorts=length(cohorts),
+                           rep=1,      
                            name = "MBAOD_run",
                            description = NULL,
                            zip_directories=T,
