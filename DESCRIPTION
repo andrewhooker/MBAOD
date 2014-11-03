@@ -6,7 +6,9 @@ Date: 2014-10-03
 Author: Andrew Hooker <andrew.hooker@farmbio.uu.se>, Coen Van Hasselt
 Maintainer: Andrew Hooker <andrew.hooker@farmbio.uu.se>
 Description: Adaptive optimal design using nonlinear mixed effect models
-Suggests: knitr
+Depends: PopED, xpose4, ggplot2
+Suggests: knitr, testthat
+Imports: mvtnorm
 VignetteBuilder: knitr
 License: LGPL (>= 3)
 Copyright: 2014 Andrew C. Hooker
@@ -16,3 +18,4 @@ Authors@R: c(person("Andrew C.","Hooker",
             person("Coen","Van Hasselt",
                    role="aut")
             )
+
