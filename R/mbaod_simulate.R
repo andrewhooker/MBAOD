@@ -4,6 +4,8 @@ mbaod_simulate <- function(cohorts,
                            name = "MBAOD_run",
                            description = NULL,
                            zip_directories=T,
+                           sim_data_input_fn="sim_data.csv",
+                           sim_data_output_fn="mc_sim_1.tab",
                            ...){
   
   # timing
@@ -12,8 +14,9 @@ mbaod_simulate <- function(cohorts,
   # check if directory exists
   valid_name  <- FALSE
   i <- 0
-  dir.names <- list.dirs()[grep(paste(name,"_run_dir_(\\d+)",sep=""),list.dirs())]
-  if(length(dir.names)>0) i <- as.numeric(max(gsub(paste(name,"_run_dir_(\\d+)",sep=""),"\\1",dir.names)))
+  dir_names_all <- list.dirs(recursive = FALSE)
+  dir_names <- grep(paste(name,"_run_dir_(\\d+)",sep=""),dir_names_all,value=T)
+  if(length(dir_names)>0) i <- as.numeric(max(gsub(paste(".*",name,"_run_dir_(\\d+)",sep=""),"\\1",dir_names)))
   while(!valid_name){
     i <- i+1
     run_dir <- paste(name,"_run_dir_",i,sep="")
@@ -141,17 +144,36 @@ mbaod_simulate <- function(cohorts,
         cat('    ----------------------\n')
         cat('\n')
         
+        
+        
+        
+        if(cohort$simulate$target=="poped_R"){
+          ## create data set with simulated values
+          poped.db <- do.call(create.poped.database,
+                              c(do.call(create_design,cohort$design),
+                                cohort$simulate$model,
+                                cohort$simulate$parameters))
+          sim_data <- model_prediction(poped.db=poped.db,
+                                       DV=T,
+                                       dosing=cohort$simulate$data$dosing,
+                                       filename=file.path(cohort_dir,sim_data_output_fn),
+                                       manipulation=cohort$simulate$data$manipulation)
+        }
+        
+        
+        
+        
         if(cohort$simulate$target=="NONMEM"){
-          
           ## create data set
           sim_data <- model_prediction(DV=T,
                                        design=cohort$design,
                                        dosing=cohort$simulate$data$dosing,
-                                       filename=file.path(cohort_dir,"sim_data.csv"),
+                                       filename=file.path(cohort_dir,sim_data_input_fn),
                                        manipulation=cohort$simulate$data$manipulation)
           
           ## copy simulation model to directory with name sim.mod
           file.copy(cohort$simulate$model, file.path(cohort_dir,"sim.mod")) 
+          
           
           ## for simulation model
           ## change $DATA to right file name (sim.data.csv)
@@ -159,18 +181,12 @@ mbaod_simulate <- function(cohorts,
           ## add table output so that you get same as $INPUT
           #execute(file.path(cohort_dir,"sim.mod"))
           execute("sim.mod",run_dir=cohort_dir,...)
-          
-          ## need to add ability to attach old data from previous cohorts and priors
-          #       ## Generate input dataset for SSE
-          #       if(i==2 && fixed){
-          #         makeSimFile_nonmem(prev = prev, step=i, last=TRUE,fixed=TRUE)
-          #       } else {
-          #         makeSimFile_nonmem(prev = prev, step=i, last=FALSE)
-          #       }
-          cohort_res$design <- cohort$design
-          cohort_res$dosing <- cohort$simulate$dosing
-          
         }
+        
+        cohort_res$design <- cohort$design
+        cohort_res$dosing <- cohort$simulate$dosing
+        
+        
       }    
       
       if(!is.null(cohort$estimate)){
@@ -189,7 +205,7 @@ mbaod_simulate <- function(cohorts,
           
           ## merge simulated data from this cohort and other cohorts
           file.create(file.path(cohort_dir,"est.dat"))          
-          data_vec <- file.path(rep_dir,paste("cohort_",1:i,sep=""),"mc_sim_1.tab")
+          data_vec <- file.path(rep_dir,paste("cohort_",1:i,sep=""),sim_data_output_fn)
           file.append(file.path(cohort_dir,"est.dat"),data_vec)
           
           ## change $DATA to match sim data name with simulated data " mc_sim_1.tab"
@@ -213,7 +229,7 @@ mbaod_simulate <- function(cohorts,
       aod_res[[paste("cohort_",i,sep="")]] <- cohort_res 
       
     } # end cohort
-        
+    
     ## summarize results for one iteration
     cat('\n')
     cat('----------------------\n')
@@ -227,11 +243,11 @@ mbaod_simulate <- function(cohorts,
     cat('--------- Final Design\n')
     final_design <- combine_designs(aod_res)
     print_design(final_design)
-  
+    
     cat('\n--------- Parameter estimation after each cohort\n')    
     #aod_res
     #aod_res$cohort_1$est_result
-      
+    
     #xpose4::read.lst(file.path(cohort_dir,"est.lst"))
     #xpose4::create.parameter.list(file.path(cohort_dir,"est.lst"))
     #getPars(file.path(cohort_dir,"est.lst"))
