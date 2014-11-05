@@ -1,8 +1,8 @@
 Package: MBAOD
 Type: Package
 Title: Model Based Adaptive Optimal Design
-Version: 0.0.2
-Date: 2014-10-03
+Version: 0.0.3
+Date: 2014-11-05
 Author: Andrew Hooker <andrew.hooker@farmbio.uu.se>, Coen Van Hasselt
 Maintainer: Andrew Hooker <andrew.hooker@farmbio.uu.se>
 Description: Adaptive optimal design using nonlinear mixed effect models
