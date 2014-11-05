@@ -3,14 +3,20 @@ title: "Using the MBAOD package"
 author: "Andrew C. Hooker"
 date: '`r Sys.Date()`'
 output:
-  html_document:
-    fig_caption: yes
-    number_sections: yes
   pdf_document:
     fig_caption: yes
     keep_tex: yes
     number_sections: yes
+  html_document:
+    fig_caption: yes
+    number_sections: yes
 ---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(cache=TRUE)
+cur_dir <- getwd()
+```
+
 
 # Introduction
 The MBAOD (Model Based Adaptive Optimal Design) package can be used to simulate clinical trials using predefined adaptive and optimization rules.  In addition the package can be used to optimize any specific cohort of an actual study using MBAOD.
@@ -32,7 +38,7 @@ This document describes how to install and use the MBAOD (Model Based Adaptive O
 
 2. Install PopED for R (https://github.com/andrewhooker/PopED). To install the latest stable release from CRAN, write at the R command line: 
     
-```{r, eval=FALSE}
+```{r install_poped, eval=FALSE}
     install.packages("PopED")
 ```
     
@@ -42,7 +48,7 @@ This document describes how to install and use the MBAOD (Model Based Adaptive O
 approach requires that you build a package from source, i.e. `make` and compilers must be installed on your 
 system -- see the R FAQ for your operating system ; you may also need to install dependencies manually:
 
-```{r, eval=FALSE}
+```{r install_mbaod, eval=FALSE}
     devtools::install_github("MBAOD",username="andrewhooker")
 ```
 
@@ -59,7 +65,7 @@ The function's main argument `cohorts` accepts a list of cohorts to run. Each co
 There are a number of optional arguments (see `args(mbaod_simulate)`) including:
 
 * `ncohorts` specifies the number of cohorts in the adaptive design procedure. If larger than the length of `cohorts` then 
-the cohort information is inhereted from the last cohort in the list.
+the cohort information is inherited from the last cohort in the list.
 * `rep` specifies the number of times the adaptive design procedure should be repeated.
 
 The MBAOD package also has a few plotting functions to visualize the output from `mbaod_simulate()`, including `mbaod_vpc()` and `plot_parameter_estimates()`.  
@@ -104,7 +110,7 @@ Where $V_{STD,i}$ and ${CL}_{BASE,i}$ are assumed log-normally distributed as ab
 ### Parameter values
 We assume that the underlying true model of the system is the "Adult model" with $CL_i$ and $V_i$ defined by the "Maturation model". Parameters for all simulations are (the "true" parameter values):
 
-```{r, results='asis',echo=FALSE}
+```{r true_value_table, results='asis',echo=FALSE}
 true_values <- c(thetas=c(1,20,2,25,5),
                  omegas=sqrt(c(0.05,0.05)),
                  sigmas=sqrt(c(0.015,0.0015)))
@@ -115,13 +121,13 @@ colnames(params_formated) <- c("$CL_{BASE, pop}$","$V_{STD, pop}$","$CL_{MAX}$",
 knitr::kable(params_formated,caption="The true parameter values")
 ```
 
-## Design 1   
-In this design, we begin by simulating an initial cohort of adult patients using a fixed design.  Parameter estimates from that initial cohort are then used to optimize the next cohort containing children.  Optimization wiLL be on the weights  as well as the sample times of the future cohorts.  In this design we assume that each new cohort will contain groups of individuals with only one value of weight. An obvious simplification, but a starting point none-the-less.
+## Design 1: One weight group per cohort   
+In this design, we begin by simulating an initial cohort of adult patients using a fixed design.  Parameter estimates from that initial cohort are then used to optimize the next cohort containing children.  Optimization will be on the weights  as well as the sample times of the future cohorts.  In this design we assume that each new cohort will contain groups of individuals with only one value of weight. An obvious simplification, but a starting point none-the-less.
 
 The R commands found below are also available as an R script in the code repository in the directory 
 "/inst/examples/Ex_1_bridging/poped_r/Example_1.R".  We begin our example by setting the path to this directory 
 
-```{r}
+```{r change_path}
 setwd("~/Documents/_PROJECTS/AOD/repos/MBAOD/inst/examples/Ex_1_bridging/poped_r")
 ```
 
@@ -131,7 +137,7 @@ knitr::opts_knit$set(root.dir = "~/Documents/_PROJECTS/AOD/repos/MBAOD/inst/exam
 
 Next we load the MBAOD package.  Change the path in the code below to where you have the code on your computer. If you used the `install_github()` method to install MBAOD then a simple `library(MBAOD)` will work instead.
 
-```{r, results='hide', message=FALSE}
+```{r load_mbaod, cache=FALSE, results='hide', message=FALSE}
 devtools::load_all("~/Documents/_PROJECTS/AOD/repos/MBAOD")
 ```
 
@@ -171,11 +177,11 @@ The `optimize=NULL` argument indicates that we do not optimize this cohort's des
 The `target` argument determines which tool is used to simulate data.  Currently `"NONMEM"` and `"poped_R"` are allowed options. 
 
 The `data` argument contains a list information about adding and manipulating 
-columns in the simulation dataset.   The `dosing` argument in this list is a list of lists that adds dosing records to the 
-simulation dataset (Each inner list corresponding to a group in the cohort design). The `manipulation` agument is 
-used to transform the resulting columns of the dataset (or create new columns), and is a list of one or more `expression()` 
+columns in the simulation data set.   The `dosing` argument in this list is a list of lists that adds dosing records to the 
+simulation data set (Each inner list corresponding to a group in the cohort design). The `manipulation` argument is 
+used to transform the resulting columns of the data set (or create new columns), and is a list of one or more `expression()` 
 arguments. For example the above code adds dosing records `AMT=1000` at `Time=0` 
-and trandforms the `AMT` column of the dataset to be 
+and transforms the `AMT` column of the data set to be 
 dependent on `WT` (we know `WT` to be 70 in this first cohort but this will be optimized, and 
 therefore unknown before the experiment, in future cohorts).
 
@@ -187,7 +193,7 @@ package is called "sim_data.csv"
 in `mbaod_simulate()`).  One should use this name in the `$DATA` 
 section of the model file. Additionally the `$INPUT` section of the model file 
 should expect the structure of the simulation input data file `sim_data_input_fn`. 
-Currently the code use the create this dataset is:
+Currently the code use the create this data set is:
 
 ```{r}
 sim_data <- model_prediction(DV=T,
@@ -227,7 +233,7 @@ cohort_1_poped_sim$simulate <-
 
 
  Here we define the `model` as a PopED model with `parameters` as the "true" model parameters.  The allowed structure of the models and parameters section of this code is described in `?PopED::create.poped.database` 
-(look in the "Arguments" section, under "START OF MODEL DEFINITION OPTIONS" and "START OF Model parameters SPECIFICATION OPTIONS").  Additionally we remove unneeded columns in the dataset directly with the `manipulation` argument, instead of doing this in the NONMEM code. Currently the code used to create the simulation  dataset using PopED in R is (directly creating `sim_data_output_fn`):
+(look in the "Arguments" section, under "START OF MODEL DEFINITION OPTIONS" and "START OF Model parameters SPECIFICATION OPTIONS").  Additionally we remove unneeded columns in the data set directly with the `manipulation` argument, instead of doing this in the NONMEM code. Currently the code used to create the simulation  data set using PopED in R is (directly creating `sim_data_output_fn`):
 
 ```{r}
 cohort <- cohort_1_poped_sim
@@ -258,7 +264,7 @@ the `sim_data_output_fn`.
 
 ### Defining the second cohort
 
-The second cohort of patients is the first group of chldren.  We assume in this example that each cohort contains a homogenous group, all with the same (optimized) weight.  Our initial design is a weight half-way between 0 and 70 kg.  
+The second cohort of patients is the first group of children.  We assume in this example that each cohort contains a homogeneous group, all with the same (optimized) weight.  Our initial design is a weight half-way between 0 and 70 kg.  
 
 ```{r}
 cohort_2 <- cohort_1
@@ -274,7 +280,7 @@ Next we define the how we would like to optimize this design.  In this case with
 
 The parameters for optimization are defined from the estimation in the previous step.  However, since only a reduced model was used for that estimation, additional initial parameter guesses are needed for the extra parameters in the full model used for optimization of this cohort. Currently the extra parameters are just added to the end of the current lists of estimated parameters.  A `manipulation` argument is provided for transformation of initial parameter values.  In this case, the previous cohort had just a $CL_{pop}$ term estimated, which is a combination of $CL_{BASE,pop}$ and $CL_{MAX}$.  Thus the parameter guess for the full model is $CL_{BASE,pop}=CL_{pop}-CL_{MAX}$.
 
-Other settings of the optimization can be manipulated using `settings.db` which can include any argument available in `PopED::create.poped.database()` and `settings.opt` which can include any argument available in `PopED::poped_optimize()`, whcih is the optimization function used in the MBAOD package. In this example we declare that we want to optimize both sampling times and covariates ($WT$), that we want to use the random search algorithm, and that we should not compute inverses of our fisher information matrix (with only 2 cohorts the problem is underdetermined and thus the matrix is not invertable).  
+Other settings of the optimization can be manipulated using `settings.db` which can include any argument available in `PopED::create.poped.database()` and `settings.opt` which can include any argument available in `PopED::poped_optimize()`, which is the optimization function used in the MBAOD package. In this example we declare that we want to optimize both sampling times and covariates ($WT$), that we want to use the random search algorithm, and that we should not compute inverses of our fisher information matrix (with only 2 cohorts the problem is under-determined and thus the matrix is not invertable).  
 
 ```{r}
 cohort_2$optimize <- list(
@@ -307,7 +313,7 @@ cohort_2$optimize <- list(
   )
 ```
 
-Lastly we define the estimation precedure for cohort 2, using the full model this time:
+Lastly we define the estimation procedure for cohort 2, using the full model this time:
 
 ```{r}
  cohort_2$estimate <- list(target="NONMEM", model="./NONMEM_files/est_full.mod")
@@ -335,9 +341,9 @@ cohort_3_poped_sim$optimize$parameters <- NULL
 
 ### MBAOD simulation
 
-Next we simulate this MBAOD setup.  First just with one iteration to see that things are working.  Here we simulate 4 cohorts where the 4th cohort definition is identical to the 3rd cohort and thus does not need to be defined.
+Next we simulate this MBAOD setup.  First just with one iteration to see that things are working.  Here we simulate 4 cohorts where the $4_{th}$ cohort definition is identical to the $3_{rd}$ cohort and thus does not need to be defined.
 
-```{r,results='hide'}
+```{r run_one_iteration,results='hide',eval=FALSE}
 results_all <- 
   mbaod_simulate(cohorts=list(cohort_1,cohort_2,cohort_3), 
                  ncohorts=4, # number of cohorts in one MBAOD 
@@ -347,24 +353,273 @@ results_all <-
 
 ```
 
-```{r,echo=FALSE}
+```{r run_one_iteration_results,echo=FALSE}
+load("Example_1_rep_1/results_rep_1.Rdata")
 cat('--------- Final Design\n')
-print_design(results_all$iteration_1$final_design)
-tmp <- results_all$iteration_1
+print_design(aod_res$final_design)
+tmp <- aod_res
 tmp$est_summary <- NULL
 tmp$final_design <- NULL
 cat('\n--------- Parameter estimation after each cohort\n')    
 summarize_estimation(tmp)
 ```
 
-The results demonstrate that the design gives relatively resonable estimates in the final cohort of patients.
+The results demonstrate that the design gives relatively reasonable estimates in the final cohort of patients.
 
-simulate 100 times
+Next we simulate the process 100 times instead of just one.
 
-compare with poped simulation
+```{r run_100_iterations,results='hide',eval=FALSE}
+results_all <- 
+  mbaod_simulate(cohorts=list(cohort_1,cohort_2,cohort_3), 
+                 ncohorts=4, # number of cohorts in one MBAOD 
+                 rep=100, #number of times to repeat the MBAOD simulation 
+                 name="Example_1", 
+                 description="4 cohorts, 1 group per step")
 
-compare with 4 groups per cohort
+```
 
-cpmpare to optimal design with right parameter values
+```{r load_example_1_100,echo=FALSE}
+load("Example_1_rep_100/results_all.Rdata")
+```
 
-compare to optimal with wrong parameter values
+We can then visualize the results in various ways.  First we create some information for the coming plots. 
+ 
+
+```{r set_up_plots}
+
+#all_designs
+design_list <- results_all[grep("^iteration",names(results_all))]
+all_designs <- combine_designs(design_list,design_name = "final_design")
+
+model = list(
+  ff_file="PK.1.comp.maturation.ff",
+  fError_file="feps.add.prop",
+  fg_file="PK.1.comp.maturation.fg"
+)
+
+parameters_true=list(
+  bpop=c(CL=1,V=20,EMAX=2,EC50=25,HILL=5),
+  d=c(0.05,0.05),
+  sigma=c(0.015,0.0015)
+)
+```
+
+Now we can plot the optimized designs for all iterations of the MBAOD in one plot to look for trends in the resulting designs.
+
+```{r design_plot, eval=F, fig.cap="Designs of all 100 iterations plotted together.  Lines are the population predicitons for the group (based on optimized WT), and the points are the optimized sample times"}
+
+poped.db <- do.call(create.poped.database,c(all_designs,model,parameters_true))
+
+plot1 <- plot_model_prediction(poped.db,y_lab="Concentration") + theme(legend.position="none")
+plot1
+
+```
+
+```{r, echo=FALSE}
+foo <- file.copy("./Example_1_rep_100/optimized_designs.pdf",file.path(cur_dir,"figures","Example_1_rep_100_optimized_designs.pdf"),overwrite=T)
+```
+
+![Design 1 optimized designs of all iterations plotted together.  Lines are the population predicitons for the group (based on optimized WT), and the points are the optimized sample times.](figures/Example_1_rep_100_optimized_designs.pdf)
+
+We see that a majority of designs choose a low weight group and a medium weight group (as expected).  We also see that there is no clear pattern to when the sample times are taken, possibly due to the poor convergence of the random search optimization algorithm used in this example.
+
+To better visualize the choice of weights we create a example specific plot showing the location of the weight choices, per cohort, relative to the true model for $CL$.  
+
+```{r cl_plot, fig.cap="Weight optimization values per cohort relative to the true CL model.  Results shown for all iterations."}
+
+CL_mod <- function(params=list(BASE=1,EMAX=2,E50=25,HILL=5),IDV){
+  with(params,{
+    vals <- BASE+ (EMAX*IDV^HILL)/(E50^HILL + IDV^HILL)
+    return(vals)
+  })
+}
+
+df <- data.frame(WT=0:70)
+df$CL=CL_mod(IDV=df$WT)
+
+df.2 <- data.frame(all_designs$a)
+df.2$CL=CL_mod(IDV=df.2$WT)
+nrep <- length(grep("^iteration",names(results_all)))
+ncohort <- size(df.2,1)/nrep
+df.2$Cohort=as.factor(rep(1:ncohort,nrep))  
+
+p <- ggplot(data=df, aes(x=WT,y=CL))
+p <- p+geom_line()
+p <- p+geom_point(data=df.2,aes(color=Cohort),size=4,alpha=0.5)
+p
+
+```
+
+We see that, in general, the second cohort is generally at a very low weight,  the third cohort is at a weight below the  $WT_{50}$ value, and the fourth cohort is at a weight above the $WT_{50}$ value.
+
+Next we can examine the parameter estimates from this simulation experiment.  
+
+```{r parameter_estimates, fig.cap="Parameter estimates for all 100 iterations."}
+parameters_true_sd <- parameters_true
+parameters_true_sd$d <- sqrt(parameters_true_sd$d) 
+parameters_true_sd$sigma <- sqrt(parameters_true_sd$sigma) 
+
+plot2 <- plot_parameter_estimates(results_all,unlist(parameters_true_sd))
+plot2
+
+# Zoom in a bit 
+plot2a <- plot2 + coord_cartesian(xlim = NULL, ylim= c(-50,50))
+plot2a
+```
+
+We see that there is no clear bias in parameter estimates and that they have relatively good precision.
+
+We can simulate a population of individuals from the true parameter estimates and compare to the populations that are simulated from each of the parameter estimates in the 100 iterations of the MBAOD procedure. Here we simulate a population of individuals with a weight of 35 kg.  
+
+```{r vpc,eval=FALSE,fig.cap="Visualization of a population of individuals using the true parameter values, showing the population prediction (PRED, black line) and the 2.5% and 97.5% of the individual predictions (IPRED, dotted lines).  The red area is a 95% CI for the PRED predictions from the 100 parameter estimates from the 100 iterations in the MBAOD simulations.  The blue areas are the 95% CI for the IPRED percentiles."}
+
+design_1  <-  list(
+  groupsize = 200,
+  m=1,
+  a   = 35,
+  xt = c(0.5,1,2,3,6,12,24)
+)
+
+mbaod_vpc(design_1, 
+          model, 
+          parameters_true, 
+          results_all)
+
+
+
+###########
+# multiple groups here
+###########
+
+# design_2 = list(
+#   groupsize = 200,
+#   m=4,
+#   a   = rbind(10, 35, 55, 70),
+#   xt = c(0.5,1,2,3,6,12,24)
+# )
+# 
+# mbaod_vpc(design_2, 
+#           model, 
+#           parameters_true, 
+#           results_all, 
+#           separate.groups=T)
+```
+
+```{r, echo=FALSE}
+foo <- file.copy("./Example_1_rep_100/vpc001.pdf",file.path(cur_dir,"figures","Example_1_rep_100_vpc001.pdf"),overwrite=T)
+```
+
+![Visual predictive check of the MBAOD results given a design with a WT of 35 kg.  Visualization is of a population of individuals using the true parameter values, showing the population prediction (PRED, black line) and the 2.5% and 97.5% of the individual predictions (IPRED, dotted lines).  The red area is a 95% CI for the PRED predictions generated from the parameter estimates from the iterations in the MBAOD simulations.  The blue areas are the 95% CI for the IPRED percentiles.](figures/Example_1_rep_100_vpc001.pdf)
+
+We can see a some deviation for both the 2.5% IPRED values.  This deviation is potentially due to the low number of simulations (100) to capture just the 2.5 percentile. To what extent the deviation is important is, perhaps, situation dependent.
+
+### Simulation with PopED in R
+
+We can compare the above results with the simulations done in PopED for R:
+
+
+```{r run_100_iterations_poped,results='hide',eval=FALSE}
+results_all <- 
+  mbaod_simulate(cohorts=list(cohort_1_poped_sim,
+                              cohort_2_poped_sim,
+                              cohort_3_poped_sim), 
+                 ncohorts=4, # number of cohorts in one MBAOD 
+                 rep=100, #number of times to repeat the MBAOD simulation 
+                 name="Example_1_c", 
+                 description="4 cohorts, 1 group per cohort, simulate with PopED in R")
+
+```
+
+```{r load_example_1_c_rep_100,echo=FALSE}
+load("Example_1_c_rep_100/results_all.Rdata")
+```
+
+```{r, fig.cap="Parameter estimates for all 100 iterations."}
+plot3 <- plot_parameter_estimates(results_all,unlist(parameters_true_sd))
+plot3
+
+# Zoom in a bit 
+plot3a <- plot2 + coord_cartesian(xlim = NULL, ylim= c(-50,50))
+plot3a
+```
+
+There is no obvious difference in the results.  Both methods should work just as well.
+
+## Design with 4 groups per cohort
+
+We can compare the MBAOD setup described above with a setup that has 4 groups of patients per cohort. 
+
+```{r,eval=FALSE}
+cohort_1=list(
+  design = list(
+    groupsize = 50,
+    a = c(WT=70),
+    xt = c(0.1,1,2,4,6,8,24)
+  ),
+  optimize=NULL,
+  simulate=list(target="NONMEM", model="./NONMEM_files/sim.mod",
+                data=list(dosing = list(list(AMT=1000,Time=0)),
+                          manipulation = list(expression(AMT <- AMT*WT/70))
+                )
+  ),
+  estimate=list(target="NONMEM", model="./NONMEM_files/est_red.mod")
+)
+
+cohort_2 = list(
+  design = list(
+    groupsize = 5,
+    m=4,
+    a   = t(rbind(WT=c(5,20,40,50))),
+    xt = c(0.5,1,2,3,6,12,24)
+  ),
+  optimize=list(target="poped_R",
+                model = list(
+                  ff_file="PK.1.comp.maturation.ff",
+                  fError_file="feps.add.prop",
+                  fg_file="PK.1.comp.maturation.fg"
+                ),
+                design_space=list(maxa=70,
+                                  mina=1,
+                                  minxt=0,
+                                  maxxt=24),
+                parameters=list(
+                  bpop=c(EMAX=2,EC50=5,HILL=5), 
+                  manipulation=list(expression(bpop[1] <- bpop[1]-bpop[3])) 
+                  ),
+                settings.db=NULL,
+                settings.opt=list(
+                  opt_xt=T,
+                  opt_a=T,
+                  bUseRandomSearch= 1,
+                  bUseStochasticGradient = 0,
+                  bUseBFGSMinimizer = 0,
+                  bUseLineSearch = 0,
+                  compute_inv=F
+                )
+  ),
+  simulate=cohort_1$simulate,
+  estimate=list(target="NONMEM", model="./NONMEM_files/est_full.mod")
+)
+
+cohort_3 <- cohort_2
+cohort_3$optimize$parameters <- NULL
+
+results_all <- mbaod_simulate(cohorts=list(cohort_1,cohort_2,cohort_3), 
+                              ncohorts=4, # number of steps or cohorts in one AOD
+                              rep=100, #number of times to repeat the MBAOD simulation 
+                              name="Example_1_d", 
+                              description="4 steps, 4 groups in steps 2-4")
+```
+
+
+```{r load_example_1_d_rep_100,echo=FALSE}
+load("Example_1_d_rep_100/results_all.Rdata")
+```
+
+```{r, fig.cap="Parameter estimates for all 100 iterations."}
+plot_parameter_estimates(results_all,unlist(parameters_true_sd))
+```
+
+We see fewer outliers, no other clear differences.
+
+

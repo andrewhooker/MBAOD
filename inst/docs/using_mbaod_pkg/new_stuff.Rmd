@@ -1,0 +1,12 @@
+
+
+## Optimal design with the wrong initial parameters
+
+We can also compare what would happen if we performed the optimization only once, directly after the adult data came in.  
+
+
+
+
+## Optimal design with the right initial parameters
+
+## One group per cohort using a better optimization method
