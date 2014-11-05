@@ -1,3 +1,7 @@
 /Example_1_old_results
 *_run_dir_*
 /old
+/Example_1*
+*.pdf
+*.png
+/tmp
