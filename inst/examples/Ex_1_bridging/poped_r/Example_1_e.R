@@ -1,55 +1,56 @@
-## RUN MBAOD simulation with missspecified prior. 
-## using NONMEM and PopED in R
-## also trying to make things less model dependent
-## and less NONMEM dependent
+## RUN MB OD simulation with missspecified initial parameter estimates. 
 
 ## simulated values (the truth) in this case will be c(emax=2,e50=25,hill=5)
+## misspecified parameter values will be c(emax=2,e50=5,hill=5)
 
-# #set path to the directory where this file is located
-# setwd("~/Documents/_PROJECTS/AOD/repos/MBAOD/inst/examples/Ex_1_bridging/poped_r_devel")
-# 
-# # remove things from the global environment
-# rm(list=ls())
-# 
-# library(PopED)
-# library(mvtnorm)
-# ## or load the development version ##
-# #library(devtools); load_all("/Users/ahooker/Documents/_PROJECTS/PopED_in_R/poped_r/PopED/")
-# 
-# library(xpose4)
-# 
-# # load the MBAOD package
-# source(file.path("..","..","..","tools","sourceDir.R"))
-# sourceDir(file.path("..","..","..","..","R"),trace=F)
+## optimization/simulation with poped, estimation with NONMEM
+
 
 #set path to the directory where this file is located
 setwd("~/Documents/_PROJECTS/AOD/repos/MBAOD/inst/examples/Ex_1_bridging/poped_r")
 
 devtools::load_all("/Users/ahooker/Documents/_PROJECTS/AOD/repos/MBAOD")
 
-
 # load the PopED model file
 source("PopED_files/poped.mod.PK.1.comp.maturation.R")
 
-step_1=list(
+# the true parameters for this study
+parameters_true=list(
+  bpop=c(CL=1,V=20,EMAX=2,EC50=25,HILL=5),
+  d=c(CL=0.05,V=0.05),
+  sigma=c(PROP=0.015,ADD=0.0015)
+)
+
+cohort_1=list(
   design = list(
     groupsize = 50,
     a = c(WT=70),
     xt = c(0.1,1,2,4,6,8,24)
-  ),
+    ),
   optimize=NULL,
-  simulate=list(target="NONMEM", model="./NONMEM_files/sim.mod",
+  simulate=list(target="poped_R", 
+                model = list(ff_file="PK.1.comp.maturation.ff",
+                             fError_file="feps.add.prop",
+                             fg_file="PK.1.comp.maturation.fg"),
+                parameters = parameters_true,
                 data=list(dosing = list(list(AMT=1000,Time=0)),
-                          manipulation = list(expression(AMT <- AMT*WT/70))
+                          manipulation = list(expression(AMT <- AMT*WT/70),
+                                              expression(IPRED <- NULL),
+                                              expression(PRED <- NULL),
+                                              expression(Group <- NULL),
+                                              expression(Model <- NULL))
+                          )
+                ),
+  estimate=list(target="NONMEM", 
+                model="./NONMEM_files/est_red.mod"
                 )
-  ),
-  estimate=list(target="NONMEM", model="./NONMEM_files/est_red.mod")
-)
+  )
 
-step_2 = list(
+cohort_2 = list(
   design = list(
     groupsize = 20,
-    a   = c(WT=35),
+    m=3,
+    a   = t(rbind(WT=c(5,20,40))),
     xt = c(0.5,1,2,3,6,12,24)
   ),
   optimize=list(target="poped_R",
@@ -77,29 +78,21 @@ step_2 = list(
                   compute_inv=F
                 )
   ),
-  simulate=list(target="NONMEM", model="./NONMEM_files/sim.mod",
-                data=list(
-                  dosing = list(list(AMT=1000,Time=0)),
-                  manipulation = list(expression(AMT <- AMT*WT/70))
-                )
-  ),
+  simulate=cohort_1$simulate,
   estimate=list(target="NONMEM", model="./NONMEM_files/est_full.mod")
 )
 
-
-step_3 <- step_2
-step_3$optimize$parameters <- NULL
 
 
 # source("create.poped.database.R")
 # assignInNamespace("create.poped.database",create.poped.database, ns="PopED")
 
 
-results_all <- mbaod_simulate(cohorts=list(step_1,step_2,step_3), # anything after step_3 is the same as step_3
-                              ncohorts=4, # number of steps or cohorts in one AOD
-                              rep=100, #number of times to repeat the MBAOD simulation 
-                              name="Example_1", 
-                              description="4 steps, 1 group per step")
+results_all <- mbaod_simulate(cohorts=list(cohort_1,cohort_2), 
+                              ncohorts=2, 
+                              rep=100, 
+                              name="Example_1_e", 
+                              description="2 steps, OD after first cohort")
 
 
 
@@ -107,7 +100,7 @@ results_all <- mbaod_simulate(cohorts=list(step_1,step_2,step_3), # anything aft
 # ## here are some examples
 # 
 # library(grid)
-#library(ggplot2)
+# library(ggplot2)
 #library(reshape2)
 
 
@@ -148,6 +141,9 @@ true_values <- c(thetas=c(1,20,2,25,5),
                  sigmas=sqrt(c(0.015,0.0015)))
 
 plot_parameter_estimates(results_all,true_values)
+
+## numerical summary
+
 
 #################################
 ######## VPC of IPRED from estimated models and true model

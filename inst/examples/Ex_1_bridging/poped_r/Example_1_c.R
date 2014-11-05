@@ -91,8 +91,8 @@ cohort_3$optimize$parameters <- NULL
 
 
 results_all <- mbaod_simulate(cohorts=list(cohort_1,cohort_2,cohort_3), # anything after step_3 is the same as step_3
-                              ncohorts=2, # number of steps or cohorts in one AOD
-                              rep=1, #number of times to repeat the MBAOD simulation 
+                              ncohorts=4, # number of steps or cohorts in one AOD
+                              rep=100, #number of times to repeat the MBAOD simulation 
                               name="Example_1_c", 
                               description="4 steps, 1 group per step")
 
@@ -102,7 +102,7 @@ results_all <- mbaod_simulate(cohorts=list(cohort_1,cohort_2,cohort_3), # anythi
 # ## here are some examples
 # 
 # library(grid)
-library(ggplot2)
+# library(ggplot2)
 #library(reshape2)
 
 
@@ -144,6 +144,9 @@ true_values <- c(thetas=c(1,20,2,25,5),
 
 plot_parameter_estimates(results_all,true_values)
 
+## numerical summary
+
+
 #################################
 ######## VPC of IPRED from estimated models and true model
 #################################
@@ -155,12 +158,12 @@ design_1 = list(
   xt = c(0.5,1,2,3,6,12,24)
 )
 
-design_2 = list(
-  groupsize = 200,
-  m=4,
-  a   = rbind(10, 35, 55, 70),
-  xt = c(0.5,1,2,3,6,12,24)
-)
+# design_2 = list(
+#   groupsize = 200,
+#   m=4,
+#   a   = rbind(10, 35, 55, 70),
+#   xt = c(0.5,1,2,3,6,12,24)
+# )
 
 model = list(
   ff_file="PK.1.comp.maturation.ff",
@@ -179,11 +182,11 @@ mbaod_vpc(design_1,
           parameters_true, 
           results_all)
 
-mbaod_vpc(design_2, 
-          model, 
-          parameters_true, 
-          results_all, 
-          separate.groups=T)
+# mbaod_vpc(design_2, 
+#           model, 
+#           parameters_true, 
+#           results_all, 
+#           separate.groups=T)
 
 
 # #################################

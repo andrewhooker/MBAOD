@@ -5,33 +5,15 @@
 
 ## simulated values (the truth) in this case will be c(emax=2,e50=25,hill=5)
 
-# #set path to the directory where this file is located
-# setwd("~/Documents/_PROJECTS/AOD/repos/MBAOD/inst/examples/Ex_1_bridging/poped_r_devel")
-# 
-# # remove things from the global environment
-# rm(list=ls())
-# 
-# library(PopED)
-# library(mvtnorm)
-# ## or load the development version ##
-# #library(devtools); load_all("/Users/ahooker/Documents/_PROJECTS/PopED_in_R/poped_r/PopED/")
-# 
-# library(xpose4)
-# 
-# # load the MBAOD package
-# source(file.path("..","..","..","tools","sourceDir.R"))
-# sourceDir(file.path("..","..","..","..","R"),trace=F)
-
 #set path to the directory where this file is located
 setwd("~/Documents/_PROJECTS/AOD/repos/MBAOD/inst/examples/Ex_1_bridging/poped_r")
 
 devtools::load_all("/Users/ahooker/Documents/_PROJECTS/AOD/repos/MBAOD")
 
-
 # load the PopED model file
 source("PopED_files/poped.mod.PK.1.comp.maturation.R")
 
-step_1=list(
+cohort_1=list(
   design = list(
     groupsize = 50,
     a = c(WT=70),
@@ -46,10 +28,11 @@ step_1=list(
   estimate=list(target="NONMEM", model="./NONMEM_files/est_red.mod")
 )
 
-step_2 = list(
+cohort_2 = list(
   design = list(
-    groupsize = 20,
-    a   = c(WT=35),
+    groupsize = 5,
+    m=4,
+    a   = t(rbind(WT=c(5,20,40,50))),
     xt = c(0.5,1,2,3,6,12,24)
   ),
   optimize=list(target="poped_R",
@@ -77,29 +60,24 @@ step_2 = list(
                   compute_inv=F
                 )
   ),
-  simulate=list(target="NONMEM", model="./NONMEM_files/sim.mod",
-                data=list(
-                  dosing = list(list(AMT=1000,Time=0)),
-                  manipulation = list(expression(AMT <- AMT*WT/70))
-                )
-  ),
+  simulate=cohort_1$simulate,
   estimate=list(target="NONMEM", model="./NONMEM_files/est_full.mod")
 )
 
 
-step_3 <- step_2
-step_3$optimize$parameters <- NULL
+cohort_3 <- cohort_2
+cohort_3$optimize$parameters <- NULL
 
 
 # source("create.poped.database.R")
 # assignInNamespace("create.poped.database",create.poped.database, ns="PopED")
 
 
-results_all <- mbaod_simulate(cohorts=list(step_1,step_2,step_3), # anything after step_3 is the same as step_3
+results_all <- mbaod_simulate(cohorts=list(cohort_1,cohort_2,cohort_3), # anything after step_3 is the same as step_3
                               ncohorts=4, # number of steps or cohorts in one AOD
                               rep=100, #number of times to repeat the MBAOD simulation 
-                              name="Example_1", 
-                              description="4 steps, 1 group per step")
+                              name="Example_1_d", 
+                              description="4 steps, 4 groups in steps 2-4")
 
 
 
@@ -160,12 +138,12 @@ design_1 = list(
   xt = c(0.5,1,2,3,6,12,24)
 )
 
-# design_2 = list(
-#   groupsize = 200,
-#   m=4,
-#   a   = rbind(10, 35, 55, 70),
-#   xt = c(0.5,1,2,3,6,12,24)
-# )
+design_2 = list(
+  groupsize = 200,
+  m=4,
+  a   = rbind(10, 35, 55, 70),
+  xt = c(0.5,1,2,3,6,12,24)
+)
 
 model = list(
   ff_file="PK.1.comp.maturation.ff",
@@ -184,11 +162,11 @@ mbaod_vpc(design_1,
           parameters_true, 
           results_all)
 
-# mbaod_vpc(design_2, 
-#           model, 
-#           parameters_true, 
-#           results_all, 
-#           separate.groups=T)
+mbaod_vpc(design_2, 
+          model, 
+          parameters_true, 
+          results_all, 
+          separate.groups=T)
 
 
 # #################################
