@@ -6,6 +6,7 @@ mbaod_simulate <- function(cohorts,
                            zip_directories=T,
                            sim_data_input_fn="sim_data.csv",
                            sim_data_output_fn="mc_sim_1.tab",
+                           #seed=1234,
                            ...){
   
   # timing
@@ -171,15 +172,18 @@ mbaod_simulate <- function(cohorts,
                                        filename=file.path(cohort_dir,sim_data_input_fn),
                                        manipulation=cohort$simulate$data$manipulation)
           
-          ## copy simulation model to directory with name sim.mod
-          file.copy(cohort$simulate$model, file.path(cohort_dir,"sim.mod")) 
+          ## copy simulation model to directory with name sim_orig.mod
+          file.copy(cohort$simulate$model, file.path(cohort_dir,"sim_orig.mod")) 
           
-          
+          ## change the seed number in the file
+          change_seed_number(file.path(cohort_dir,"sim_orig.mod"),
+                             file.path(cohort_dir,"sim.mod"))
+                    
           ## for simulation model
           ## change $DATA to right file name (sim.data.csv)
           ## change $INPUT so that it matches sim_data, match with grep, if no match then throw an error, add drop to columns not needed
           ## add table output so that you get same as $INPUT
-          #execute(file.path(cohort_dir,"sim.mod"))
+          
           execute("sim.mod",run_dir=cohort_dir,...)
         }
         

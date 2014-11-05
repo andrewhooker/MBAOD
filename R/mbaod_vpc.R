@@ -5,7 +5,7 @@ mbaod_vpc <- function (design,
                        separate.groups=F,
                        model_num_points=100,
                        ...) {
-  library(Hmisc)
+  #library(Hmisc)
   poped.db_true <- do.call(create.poped.database,c(design,model,parameters_true))
   plot_true <- plot_model_prediction(poped.db_true,y_lab="Concentration",sample.times = F,
                                      IPRED=T,

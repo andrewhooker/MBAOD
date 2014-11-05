@@ -140,14 +140,14 @@ plot_model_prediction <- function(poped.db,
   ID <- c()
    
   if(facet_label_names){
-    if(exists("df")) levels(df$Model) <- paste("Model:",levels(df$Model))
-    if(exists("df")) levels(df$Group) <- paste("Group:",levels(df$Group))
-    if(exists("df.2")) levels(df.2$Model) <- paste("Model:",levels(df.2$Model))
-    if(exists("df.2")) levels(df.2$Group) <- paste("Group:",levels(df.2$Group))
-    if(exists("df.ipred")) levels(df.ipred$Model) <- paste("Model:",levels(df.ipred$Model))
-    if(exists("df.ipred")) levels(df.ipred$Group) <- paste("Group:",levels(df.ipred$Group))
-    if(exists("df.ipred.samples")) levels(df.ipred.samples$Model) <- paste("Model:",levels(df.ipred.samples$Model))
-    if(exists("df.ipred.samples")) levels(df.ipred.samples$Group) <- paste("Group:",levels(df.ipred.samples$Group))
+    if(exists("df",inherits=F)) levels(df$Model) <- paste("Model:",levels(df$Model))
+    if(exists("df",inherits=F)) levels(df$Group) <- paste("Group:",levels(df$Group))
+    if(exists("df.2",inherits=F)) levels(df.2$Model) <- paste("Model:",levels(df.2$Model))
+    if(exists("df.2",inherits=F)) levels(df.2$Group) <- paste("Group:",levels(df.2$Group))
+    if(exists("df.ipred",inherits=F)) levels(df.ipred$Model) <- paste("Model:",levels(df.ipred$Model))
+    if(exists("df.ipred",inherits=F)) levels(df.ipred$Group) <- paste("Group:",levels(df.ipred$Group))
+    if(exists("df.ipred.samples",inherits=F)) levels(df.ipred.samples$Model) <- paste("Model:",levels(df.ipred.samples$Model))
+    if(exists("df.ipred.samples",inherits=F)) levels(df.ipred.samples$Group) <- paste("Group:",levels(df.ipred.samples$Group))
   }
     
   p <- ggplot(data=df,aes(x=Time,y=PRED)) #+ labs(colour = NULL)

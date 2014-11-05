@@ -6,7 +6,8 @@ plot_parameter_estimates <- function(results_all,
                                      REE=T,
                                      use_sd=T,
                                      scales="free",
-                                     zero_line=F){
+                                     zero_line=F,
+                                     x_labs_angle=45){
   parameters <- 
     results_all$est_summary_total[!duplicated(results_all$est_summary_total$iter, 
                                               fromLast = TRUE),]
@@ -47,12 +48,12 @@ plot_parameter_estimates <- function(results_all,
   p <- p +  geom_boxplot() + geom_jitter(position=position_jitter(width=0.05)) + 
     xlab("Parameter") +
     ylab(ylb) +
-    facet_wrap(~type,scales=scales) +
-    theme(title = element_text(size=25),
-          axis.title = element_text(size=20),
-          axis.text.y = element_text(size=20),
-          strip.text=element_text(size=20),
-          axis.text.x = element_text(angle = 45, hjust = 1,size=15))
+    facet_wrap(~type,scales=scales)
+    #theme(title = element_text(size=25),
+    #      axis.title = element_text(size=20),
+    #      axis.text.y = element_text(size=20),
+    #      strip.text=element_text(size=20),
+  if(!is.null(x_labs_angle)) p <- p + theme(axis.text.x = element_text(angle = 45, hjust = 1))
   if(zero_line) p <- p + geom_hline(aes(yintercept=0,color="red"))
   return(p)
 }
