@@ -1,3 +1,4 @@
 import(ggplot2)
 importFrom(mvtnorm, rmvnorm)
+importFrom(Hmisc, summarize, smedian.hilow, llist)
 exportPattern("^[[:alpha:]]+")
