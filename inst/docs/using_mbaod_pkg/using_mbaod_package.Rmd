@@ -622,4 +622,97 @@ plot_parameter_estimates(results_all,unlist(parameters_true_sd))
 
 We see fewer outliers, no other clear differences.
 
+## Optimal design (no adaptation) with the wrong initial parameters
 
+We can also compare what would happen if we performed the optimization only once, directly after the adult data comes in.  First we assume that we have the wrong guesses for the  maturation model:
+
+
+```{r,eval=FALSE}
+cohort_1=list(
+  design = list(
+    groupsize = 50,
+    a = c(WT=70),
+    xt = c(0.1,1,2,4,6,8,24)
+    ),
+  optimize=NULL,
+  simulate=list(target="poped_R", 
+                model = list(ff_file="PK.1.comp.maturation.ff",
+                             fError_file="feps.add.prop",
+                             fg_file="PK.1.comp.maturation.fg"),
+                parameters = parameters_true,
+                data=list(dosing = list(list(AMT=1000,Time=0)),
+                          manipulation = list(expression(AMT <- AMT*WT/70),
+                                              expression(IPRED <- NULL),
+                                              expression(PRED <- NULL),
+                                              expression(Group <- NULL),
+                                              expression(Model <- NULL))
+                          )
+                ),
+  estimate=list(target="NONMEM", 
+                model="./NONMEM_files/est_red.mod"
+                )
+  )
+
+cohort_2 = list(
+  design = list(
+    groupsize = 20,
+    m=3,
+    a   = t(rbind(WT=c(5,20,40))),
+    xt = c(0.5,1,2,3,6,12,24)
+  ),
+  optimize=list(target="poped_R",
+                model = list(
+                  ff_file="PK.1.comp.maturation.ff",
+                  fError_file="feps.add.prop",
+                  fg_file="PK.1.comp.maturation.fg"
+                ),
+                design_space=list(maxa=70,
+                                  mina=1,
+                                  minxt=0,
+                                  maxxt=24),
+                parameters=list(
+                  bpop=c(EMAX=2,EC50=5,HILL=5), 
+                  manipulation=list(expression(bpop[1] <- bpop[1]-bpop[3])) 
+                  ),
+                settings.db=NULL,
+                settings.opt=list(
+                  opt_xt=T,
+                  opt_a=T,
+                  bUseRandomSearch= 1,
+                  bUseStochasticGradient = 0,
+                  bUseBFGSMinimizer = 0,
+                  bUseLineSearch = 0,
+                  compute_inv=F
+                )
+  ),
+  simulate=cohort_1$simulate,
+  estimate=list(target="NONMEM", model="./NONMEM_files/est_full.mod")
+)
+
+results_all <- mbaod_simulate(cohorts=list(cohort_1,cohort_2), 
+                              ncohorts=2, 
+                              rep=100, 
+                              name="Example_1_e", 
+                              description="2 steps, OD after first cohort")
+
+```
+
+
+```{r load_example_1_e_rep_100,echo=FALSE}
+load("Example_1_e_rep_100/results_all.Rdata")
+```
+
+```{r, fig.cap="Parameter estimates for all 100 iterations."}
+plot_parameter_estimates(results_all,unlist(parameters_true_sd))
+```
+
+Zoomig in a bit:
+
+```{r, fig.cap="Parameter estimates for all 100 iterations. Zooming in on the y-axis"}
+## zoomig in a bit
+plot4 <- plot_parameter_estimates(results_all,unlist(parameters_true_sd))
+plot4a <- plot4 + coord_cartesian(xlim = NULL, ylim= c(-50,50))
+plot4a
+```
+
+There is a clear bias in parameter estimates for THETA(4) and THETA(5) ($WT_{50}$ and $\gamma$).
