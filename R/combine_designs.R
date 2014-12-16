@@ -1,5 +1,8 @@
 combine_designs <- function (design_list,design_name="design") {
   
+  if(length(design_list)==0) return(NULL)
+  if(is.null(design_list)) return(NULL)
+  
   # create full designs from user inputed designs
   full_design_list <- lapply(mapply("[[",design_list,design_name,SIMPLIFY=FALSE),function(x){do.call(create_design,x)})
   

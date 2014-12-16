@@ -106,8 +106,12 @@ mbaod_simulate <- function(cohorts,
           #### Parameter estimates ------------------
           # results from previous cohort + new parameters if needed
           prev_res <- NULL
-          if(!length(aod_res)==0) prev_res <- aod_res[[length(aod_res)]]
-          parameters <- merge_parameters(prev_res$est_result,cohort$optimize$parameters)
+          if(length(aod_res)==0){
+            parameters <- cohort$optimize$parameters
+          } else {
+            prev_res <- aod_res[[length(aod_res)]]
+            parameters <- merge_parameters(prev_res$est_result,cohort$optimize$parameters)
+          }
           
           #### Create design database --------------
           # add prior FIM here if prev_fim=T

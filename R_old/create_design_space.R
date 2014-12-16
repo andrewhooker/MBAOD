@@ -49,6 +49,9 @@ create_design_space <- function(
   grouped_x=NULL)
 {
   
+  if(is.null(design)) return(NULL)
+  if(length(design)==0) return(NULL)
+  
   called_args <- match.call()
   
   comp_max_min <- function (max_val, min_val, called_args) {
