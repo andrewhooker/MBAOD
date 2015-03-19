@@ -29,6 +29,11 @@ create_design_database <- function (tot_design, tot_space, parameters, cohort) {
   tot_space_tmp$maxtotni <- NULL
   tot_space_tmp$mintotni <- NULL
   
+  #FIXED the mismatched of design space for discrete variables##
+  tot_space_tmp$discrete_x  <- tot_space_tmp$x_space
+  tot_space_tmp$x_space <- NULL
+  ##############################################################
+  
   poped.db <- do.call(create.poped.database,c(cohort$optimize$model,
                                               tot_space_tmp,
                                               tot_design,
