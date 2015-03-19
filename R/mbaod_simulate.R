@@ -229,7 +229,12 @@ mbaod_simulate <- function(cohorts,
           ## get all estimation info from xpose
           est_result <- xpose4::read.lst(file.path(cohort_dir,"est.lst"))
           
+          ## get cov matrix
+          cov_mat <- read.table(file.path(cohort_dir,"est.cov"),skip=1,header = T,row.names=1,check.names=T)
+          row.names(cov_mat) <- names(cov_mat)
+          
           cohort_res$est_result <- est_result
+          cohort_res$est_result$cov_mat <- cov_mat
         }
       }
       
