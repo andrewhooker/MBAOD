@@ -24,7 +24,7 @@ This package currently uses PopED, NONMEM, PsN and R to handle the various tasks
 approach requires that you build a package from source, i.e. `make` and compilers must be installed on your system -- see the R FAQ for your operating system ; you may also need to install dependencies manually:
 
 ```
-    devtools::install_github("MBAOD",username="andrewhooker")
+    devtools::install_github("andrewhooker/MBAOD")
 ```
 
 ## Getting started
