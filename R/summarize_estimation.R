@@ -143,7 +143,11 @@ summarize_estimation <- function (result_list,file="",omega_sd=T,sigma_sd=T,RSE=
     
     #results_cohort$cohort <- i #paste("Cohort",i,sep="_")
     
-    results <- data.frame(dplyr::rbind_list(results,results_cohort))
+    if(packageVersion("dplyr") >= "0.5.0"){
+      results <- data.frame(dplyr::bind_rows(results,results_cohort))
+    } else {
+      results <- data.frame(dplyr::rbind_list(results,results_cohort))
+    }
   }
   
   results$cohort <- as.factor(results$cohort)

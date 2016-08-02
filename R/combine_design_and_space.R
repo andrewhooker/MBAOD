@@ -36,13 +36,25 @@ combine_design_and_space <- function (cohort, aod_res) {
     prev_design_df <- lapply(prev_design,data.frame)
     prev_space_df <- lapply(prev_space,data.frame)
     
-    tot_design <- lapply(do.call(function(...){mapply(dplyr::rbind_list,...,SIMPLIFY=FALSE)},
-                                 list(prev_design_df,cur_design_df)),as.matrix)
+    if(packageVersion("dplyr") >= "0.5.0"){
+      tot_design <- lapply(do.call(function(...){mapply(dplyr::bind_rows,...,SIMPLIFY=FALSE)},
+                                   list(prev_design_df,cur_design_df)),as.matrix)
+    } else {
+      tot_design <- lapply(do.call(function(...){mapply(dplyr::rbind_list,...,SIMPLIFY=FALSE)},
+                                   list(prev_design_df,cur_design_df)),as.matrix)
+    }
+    
     tot_design$m <- sum(tot_design$m)
     tot_design <- do.call(create_design,tot_design) 
     
-    tot_space <- lapply(do.call(function(...){mapply(dplyr::rbind_list,...,SIMPLIFY=FALSE)},
-                                list(prev_space_df,cur_space_df)),as.matrix)
+    if(packageVersion("dplyr") >= "0.5.0"){
+      tot_space <- lapply(do.call(function(...){mapply(dplyr::bind_rows,...,SIMPLIFY=FALSE)},
+                                  list(prev_space_df,cur_space_df)),as.matrix)
+    } else {
+      tot_space <- lapply(do.call(function(...){mapply(dplyr::rbind_list,...,SIMPLIFY=FALSE)},
+                                  list(prev_space_df,cur_space_df)),as.matrix)
+    }
+    
     if(!is.null(tot_space[["use_grouped_a"]])) tot_space$use_grouped_a <- FALSE
     if(!is.null(tot_space[["use_grouped_x"]])) tot_space$use_grouped_x <- FALSE
     if(!is.null(tot_space[["use_grouped_xt"]])) tot_space$use_grouped_xt <- FALSE

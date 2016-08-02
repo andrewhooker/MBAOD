@@ -10,7 +10,11 @@ combine_designs <- function (design_list,design_name="design") {
   full_design_list_df <- lapply(full_design_list,function(x){lapply(x,data.frame)}) 
   
   # merge the list of designs 
-  merged_design <- lapply(do.call(function(...){mapply(dplyr::rbind_list,...,SIMPLIFY=FALSE)},full_design_list_df),as.matrix) 
+  if(packageVersion("dplyr") >= "0.5.0"){
+    merged_design <- lapply(do.call(function(...){mapply(dplyr::bind_rows,...,SIMPLIFY=FALSE)},full_design_list_df),as.matrix) 
+  } else {
+    merged_design <- lapply(do.call(function(...){mapply(dplyr::rbind_list,...,SIMPLIFY=FALSE)},full_design_list_df),as.matrix) 
+  }
   merged_design$m <- sum(merged_design$m)
   
   # check for errors and add column and row names
