@@ -35,7 +35,6 @@ combine_design_and_space <- function (cohort, aod_res) {
     cur_space_df <- lapply(cur_space,data.frame)
     prev_design_df <- lapply(prev_design,data.frame)
     prev_space_df <- lapply(prev_space,data.frame)
-    
     if(packageVersion("dplyr") >= "0.5.0"){
       tot_design <- lapply(do.call(function(...){mapply(dplyr::bind_rows,...,SIMPLIFY=FALSE)},
                                    list(prev_design_df,cur_design_df)),as.matrix)
@@ -46,6 +45,27 @@ combine_design_and_space <- function (cohort, aod_res) {
     
     tot_design$m <- sum(tot_design$m)
     tot_design <- do.call(create_design,tot_design) 
+    
+    # If a_space is not defined in previous space
+    if(length(prev_space_df)<length(cur_space_df)){
+      # find name(s) that doesn't match
+      tmp_name <- names(cur_space_df)[!(names(cur_space_df) %in% names(prev_space_df))]
+      
+      # if a space in current then add space to previous 
+      #tmp_name[grep("space$",tmp_name)]
+      if(any(tmp_name=="a_space")){
+        a_tmp <- prev_design_df$a
+        a_space_tmp <- cell(size(a_tmp))
+        for(i in 1:size(a_tmp,1)){
+          for(j in 1:size(a_tmp,2)){
+            a_space_tmp[i,j] <- list(a_tmp[i,j]) 
+          }
+        }
+        rownames(a_space_tmp) <- rownames(a_tmp)
+        colnames(a_space_tmp) <- colnames(a_tmp)
+        prev_space_df$a_space <- data.frame(a_space_tmp)
+      }
+    }
     
     if(packageVersion("dplyr") >= "0.5.0"){
       tot_space <- lapply(do.call(function(...){mapply(dplyr::bind_rows,...,SIMPLIFY=FALSE)},
