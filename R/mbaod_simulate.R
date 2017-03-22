@@ -6,6 +6,7 @@ mbaod_simulate <- function(cohorts,
                            zip_directories=T,
                            sim_data_input_fn="sim_data.csv",
                            sim_data_output_fn="mc_sim_1.tab",
+                           sim_data_manip_fun = NULL,
                            seednr=NULL,
                            ED_uncertianty = 0.1,
                            ED_only_FIM = F,
@@ -203,8 +204,11 @@ mbaod_simulate <- function(cohorts,
           sim_data <- model_prediction(DV=T,
                                        design=cohort$design,
                                        dosing=cohort$simulate$data$dosing,
-                                       filename=file.path(cohort_dir,sim_data_input_fn),
+                                       #filename=file.path(cohort_dir,sim_data_input_fn),
                                        manipulation=cohort$simulate$data$manipulation)
+          
+          if(!is.null(sim_data_manip_fun)) sim_data <- sim_data_manip_fun(sim_data,...)
+          write.table(sim_data, file.path(cohort_dir,sim_data_input_fn), row.names=FALSE, quote=FALSE, na=".",sep=",") 
           
           ## copy simulation model to directory with name sim_orig.mod
           file.copy(cohort$simulate$model, file.path(cohort_dir,"sim_orig.mod")) 
