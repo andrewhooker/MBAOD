@@ -258,7 +258,7 @@ mbaod_simulate <- function(cohorts,
           #test for successful run, retry if unsuccessful
           ## output result to screen
           ## get all estimation info from xpose
-          execute("est.mod",run_dir=cohort_dir,run_commands...)
+          execute("est.mod",run_dir=cohort_dir,additional_commands=run_commands,...)
           est_result <- run_results(cohort_dir)
           cohort_res$est_result <- est_result
           
