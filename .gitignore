@@ -3,3 +3,4 @@
 .RData
 *.Rdata
 .DS_Store
+.gitignore~
