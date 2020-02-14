@@ -1,7 +1,7 @@
 library(PopED)
 
 ## set working directory to the location of this file 
-setwd("/Users/ahooker/Documents/_PROJECTS/AOD/repos/MBAOD/inst/examples/Ex_1_bridging/poped_r_devel/PopED_files")
+setwd("~/Documents/_PROJECTS/AOD/repos/MBAOD/inst/examples/Ex_1_bridging/poped_r/PopED_files")
 
 source("poped.mod.PK.1.comp.maturation.R")
 
@@ -9,7 +9,7 @@ bpop_vals <- c(CL=1.8,V=20,EMAX=2,EC50=25,HILL=5)
 d_vals <- c(CL=0.05,V=0.05)
 
 # -- Matrix defining the variances of the residual variability terms --
-sigma_vals <- diag(c(0.015,0.0015))
+sigma_vals <- diag(c(prop=0.015,add=0.0015))
 
 # initial design
 poped.db.1 <- create.poped.database(ff_file="PK.1.comp.maturation.ff",
@@ -43,7 +43,8 @@ det(FIM)
 get_rse(FIM,poped.db)
 
 # RS+SG+LS optimization of sample times
-output <- poped_optimize(poped.db,opt_xt=T,opt_a=T)
+tic();output <- poped_optimize(poped.db,opt_xt=T,opt_a=T);toc()
+tic();output <- poped_optim(poped.db,opt_xt=T,opt_a=T,parallel=T);toc()
 
 # MFEA optimization with only integer times allowed
  mfea.output <- poped_optimize(poped.db,opt_a=1,opt_xt=0,
@@ -133,7 +134,7 @@ evaluate.fim_test <- cmpfun(evaluate.fim)
 poped_optimize_test <- cmpfun(poped_optimize)
 
 
-output <- poped_optimize(poped.db.2,opt_xt=T,opt_a=T)
+output_cmp <- poped_optim(poped.db.2,opt_xt=T,opt_a=T)
 mfea.output <- poped_optimize(poped.db.2,opt_a=1,opt_xt=0,
                               bUseExchangeAlgorithm=1,
                               EAStepSize=1)

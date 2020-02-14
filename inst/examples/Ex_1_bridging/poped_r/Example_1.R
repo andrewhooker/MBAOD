@@ -1,35 +1,43 @@
 ## RUN MBAOD simulation with missspecified prior. 
 ## using NONMEM and PopED in R
-## also trying to make things less model dependent
-## and less NONMEM dependent
 
 ## simulated values (the truth) in this case will be c(emax=2,e50=25,hill=5)
 
-# #set path to the directory where this file is located
-# setwd("~/Documents/_PROJECTS/AOD/repos/MBAOD/inst/examples/Ex_1_bridging/poped_r_devel")
-# 
-# # remove things from the global environment
-# rm(list=ls())
-# 
-# library(PopED)
-# library(mvtnorm)
-# ## or load the development version ##
-# #library(devtools); load_all("/Users/ahooker/Documents/_PROJECTS/PopED_in_R/poped_r/PopED/")
-# 
-# library(xpose4)
-# 
-# # load the MBAOD package
-# source(file.path("..","..","..","tools","sourceDir.R"))
-# sourceDir(file.path("..","..","..","..","R"),trace=F)
-
-#set path to the directory where this file is located
-setwd("~/Documents/_PROJECTS/AOD/repos/MBAOD/inst/examples/Ex_1_bridging/poped_r")
-
-devtools::load_all("/Users/ahooker/Documents/_PROJECTS/AOD/repos/MBAOD")
-
+# make sure latest MBAOD package is installed (if not, install it) and load MBAOD package
+devtools::install_github("andrewhooker/MBAOD",force = FALSE)
+library(MBAOD)
 
 # load the PopED model file
-source("PopED_files/poped.mod.PK.1.comp.maturation.R")
+source(system.file(file.path("examples",
+                             "Ex_1_bridging",
+                             "poped_r",
+                             "PopED_files",
+                             "poped.mod.PK.1.comp.maturation.R"), 
+                   package="MBAOD"))
+#source("PopED_files/poped.mod.PK.1.comp.maturation.R")
+
+
+# NONMEM models used for simulation and estimation
+sim_mod <- system.file(file.path("examples",
+                                 "Ex_1_bridging",
+                                 "poped_r",
+                                 "NONMEM_files",
+                                 "sim.mod"), 
+                       package="MBAOD")
+
+est_red_mod <- system.file(file.path("examples",
+                                     "Ex_1_bridging",
+                                     "poped_r",
+                                     "NONMEM_files",
+                                     "est_red.mod"), 
+                           package="MBAOD")
+
+est_full_mod <- system.file(file.path("examples",
+                                     "Ex_1_bridging",
+                                     "poped_r",
+                                     "NONMEM_files",
+                                     "est_full.mod"), 
+                           package="MBAOD")
 
 step_1=list(
   design = list(
@@ -38,12 +46,12 @@ step_1=list(
     xt = c(0.1,1,2,4,6,8,24)
   ),
   optimize=NULL,
-  simulate=list(target="NONMEM", model="./NONMEM_files/sim.mod",
+  simulate=list(target="NONMEM", model=sim_mod,
                 data=list(dosing = list(list(AMT=1000,Time=0)),
                           manipulation = list(expression(AMT <- AMT*WT/70))
                 )
   ),
-  estimate=list(target="NONMEM", model="./NONMEM_files/est_red.mod")
+  estimate=list(target="NONMEM", model=est_red_mod)
 )
 
 step_2 = list(
@@ -54,9 +62,9 @@ step_2 = list(
   ),
   optimize=list(target="poped_R",
                 model = list(
-                  ff_file="PK.1.comp.maturation.ff",
-                  fError_file="feps.add.prop",
-                  fg_file="PK.1.comp.maturation.fg"
+                  ff_fun=PK.1.comp.maturation.ff,
+                  fError_fun=feps.add.prop,
+                  fg_fun=PK.1.comp.maturation.fg
                 ),
                 design_space=list(maxa=70,
                                   mina=1,
@@ -70,20 +78,17 @@ step_2 = list(
                 settings.opt=list(
                   opt_xt=T,
                   opt_a=T,
-                  bUseRandomSearch= 1,
-                  bUseStochasticGradient = 0,
-                  bUseBFGSMinimizer = 0,
-                  bUseLineSearch = 0,
+                  method= c("ARS","LS"),
                   compute_inv=F
                 )
   ),
-  simulate=list(target="NONMEM", model="./NONMEM_files/sim.mod",
+  simulate=list(target="NONMEM", model=sim_mod,
                 data=list(
                   dosing = list(list(AMT=1000,Time=0)),
                   manipulation = list(expression(AMT <- AMT*WT/70))
                 )
   ),
-  estimate=list(target="NONMEM", model="./NONMEM_files/est_full.mod")
+  estimate=list(target="NONMEM", model=est_full_mod)
 )
 
 
